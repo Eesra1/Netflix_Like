@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<!--
+    CHAMPS CONSERVÉS — alignés sur Film.java :
+      titleField      → title
+      yearField       → releaseDate
+      categoryComboBox→ categoryId
+      synopsisField   → synopsis
+      posterUrlField  → coverUrl
+      videoUrlField   → videoUrl
+      castField       → cast
+
+    CHAMPS SUPPRIMÉS (absents de Film.java) :
+      durationField, ratingField, bannerUrlField,
+      directorField, statusComboBox
+-->
+
+<BorderPane prefHeight="789.0" prefWidth="687.0" style="-fx-background-color: #141414;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jstream.controller.DashboardController">
+
+    <!-- ═══════════════ TOP — HEADER ═══════════════ -->
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="64.0" spacing="14.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-width: 0 0 1 0;">
+            <padding><Insets bottom="12.0" left="28.0" right="28.0" top="12.0" /></padding>
+            <children>
+
+                <!-- ✅ goBack() -->
+                <Button mnemonicParsing="false" onAction="#goBack" style="-fx-background-color: transparent; -fx-text-fill: #b3b3b3; -fx-cursor: hand; -fx-border-color: #2e2e2e; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 7 16 7 16;" text="← Retour">
+                    <font><Font size="13.0" /></font>
+                </Button>
+
+                <Separator orientation="VERTICAL" style="-fx-background-color: #2e2e2e;" />
+
+                <VBox spacing="2.0">
+                    <children>
+                        <Label text="Ajouter un Film" textFill="WHITE">
+                            <font><Font name="System Bold" size="20.0" /></font>
+                        </Label>
+                        <Label text="Remplissez les informations du nouveau film" textFill="#555555">
+                            <font><Font size="12.0" /></font>
+                        </Label>
+                    </children>
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <Label fx:id="statusLabel" text="" textFill="#46d369">
+                    <font><Font name="System Bold" size="13.0" /></font>
+                </Label>
+
+            </children>
+        </HBox>
+    </top>
+
+    <!-- ═══════════════ CENTER — FORMULAIRE ═══════════════ -->
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: #141414; -fx-border-color: #141414;">
+            <content>
+                <VBox spacing="24.0" style="-fx-background-color: #141414;">
+                    <padding><Insets bottom="40.0" left="40.0" right="40.0" top="32.0" /></padding>
+                    <children>
+
+                        <!-- ── SECTION 1 : INFORMATIONS GÉNÉRALES ── -->
+                        <VBox spacing="16.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-radius: 12; -fx-background-radius: 12;">
+                            <padding><Insets bottom="28.0" left="28.0" right="28.0" top="24.0" /></padding>
+                            <children>
+
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <StackPane prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: rgba(229,9,20,0.15); -fx-background-radius: 8;">
+                                            <children><Label style="-fx-font-size: 14px;" text="🎬" /></children>
+                                        </StackPane>
+                                        <Label text="Informations générales" textFill="WHITE">
+                                            <font><Font name="System Bold" size="15.0" /></font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <Separator style="-fx-background-color: #2e2e2e;" />
+
+                                <!-- title + releaseDate -->
+                                <GridPane hgap="20.0" vgap="14.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="ALWAYS" percentWidth="65.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" percentWidth="35.0" />
+                                    </columnConstraints>
+                                    <rowConstraints><RowConstraints /></rowConstraints>
+                                    <children>
+                                        <VBox spacing="6.0" GridPane.columnIndex="0">
+                                            <children>
+                                                <Label text="Titre *" textFill="#b3b3b3"><font><Font name="System Bold" size="12.0" /></font></Label>
+                                                <TextField fx:id="titleField" promptText="Ex : Inception" style="-fx-background-color: #252525; -fx-border-color: #2e2e2e; -fx-border-radius: 8; -fx-background-radius: 8; -fx-text-fill: white; -fx-prompt-text-fill: #444444; -fx-padding: 10 14 10 14;">
+                                                    <font><Font size="13.0" /></font>
+                                                </TextField>
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="6.0" GridPane.columnIndex="1">
+                                            <children>
+                                                <Label text="Date de sortie *" textFill="#b3b3b3"><font><Font name="System Bold" size="12.0" /></font></Label>
+                                                <TextField fx:id="yearField" promptText="aaaa-mm-jj" style="-fx-background-color: #252525; -fx-border-color: #2e2e2e; -fx-border-radius: 8; -fx-background-radius: 8; -fx-text-fill: white; -fx-prompt-text-fill: #444444; -fx-padding: 10 14 10 14;">
+                                                    <font><Font size="13.0" /></font>
+                                                </TextField>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </GridPane>
+
+                                <!-- categoryId -->
+                                <VBox spacing="6.0">
+                                    <children>
+                                        <Label text="Catégorie *" textFill="#b3b3b3"><font><Font name="System Bold" size="12.0" /></font></Label>
+                                        <ComboBox fx:id="categoryComboBox" maxWidth="Infinity" promptText="Sélectionner une catégorie..." style="-fx-font-size: 13px; -fx-background-color: #252525; -fx-border-color: #2e2e2e; -fx-border-radius: 8; -fx-background-radius: 8; -fx-text-fill: white; -fx-padding: 4 8 4 8;" />
+                                    </children>
+                                </VBox>
+
+                                <!-- synopsis -->
+                                <VBox spacing="6.0">
+                                    <children>
+                                        <Label text="Synopsis *" textFill="#b3b3b3"><font><Font name="System Bold" size="12.0" /></font></Label>
+                                        <TextArea fx:id="synopsisField" prefRowCount="4" promptText="Décrivez brièvement le film..." style="-fx-background-color: #252525; -fx-border-color: #2e2e2e; -fx-border-radius: 8; -fx-background-radius: 8; -fx-text-fill: white; -fx-prompt-text-fill: #444444; -fx-padding: 10 14 10 14;" wrapText="true">
+                                            <font><Font size="13.0" /></font>
+                                        </TextArea>
+                                    </children>
+                                </VBox>
+
+                            </children>
+                        </VBox>
+
+                        <!-- ── SECTION 2 : MÉDIAS ── -->
+                        <VBox spacing="16.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-radius: 12; -fx-background-radius: 12;">
+                            <padding><Insets bottom="28.0" left="28.0" right="28.0" top="24.0" /></padding>
+                            <children>
+
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <StackPane prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: rgba(229,9,20,0.15); -fx-background-radius: 8;">
+                                            <children><Label style="-fx-font-size: 14px;" text="🖼" /></children>
+                                        </StackPane>
+                                        <Label text="Médias" textFill="WHITE">
+                                            <font><Font name="System Bold" size="15.0" /></font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <Separator style="-fx-background-color: #2e2e2e;" />
+
+                                <!-- coverUrl + videoUrl -->
+                                <GridPane hgap="20.0" vgap="14.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                                    </columnConstraints>
+                                    <rowConstraints><RowConstraints /></rowConstraints>
+                                    <children>
+                                        <VBox spacing="6.0" GridPane.columnIndex="0">
+                                            <children>
+                                                <Label text="URL Affiche (coverUrl) *" textFill="#b3b3b3"><font><Font name="System Bold" size="12.0" /></font></Label>
+                                                <TextField fx:id="posterUrlField" promptText="https://..." style="-fx-background-color: #252525; -fx-border-color: #2e2e2e; -fx-border-radius: 8; -fx-background-radius: 8; -fx-text-fill: white; -fx-prompt-text-fill: #444444; -fx-padding: 10 14 10 14;">
+                                                    <font><Font size="13.0" /></font>
+                                                </TextField>
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="6.0" GridPane.columnIndex="1">
+                                            <children>
+                                                <Label text="URL Vidéo (videoUrl) *" textFill="#b3b3b3"><font><Font name="System Bold" size="12.0" /></font></Label>
+                                                <TextField fx:id="videoUrlField" promptText="https://..." style="-fx-background-color: #252525; -fx-border-color: #2e2e2e; -fx-border-radius: 8; -fx-background-radius: 8; -fx-text-fill: white; -fx-prompt-text-fill: #444444; -fx-padding: 10 14 10 14;">
+                                                    <font><Font size="13.0" /></font>
+                                                </TextField>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </GridPane>
+
+                            </children>
+                        </VBox>
+
+                        <!-- ── SECTION 3 : CASTING ── -->
+                        <VBox spacing="16.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-radius: 12; -fx-background-radius: 12;">
+                            <padding><Insets bottom="28.0" left="28.0" right="28.0" top="24.0" /></padding>
+                            <children>
+
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <StackPane prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: rgba(229,9,20,0.15); -fx-background-radius: 8;">
+                                            <children><Label style="-fx-font-size: 14px;" text="🎭" /></children>
+                                        </StackPane>
+                                        <Label text="Casting" textFill="WHITE">
+                                            <font><Font name="System Bold" size="15.0" /></font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <Separator style="-fx-background-color: #2e2e2e;" />
+
+                                <!-- cast -->
+                                <VBox spacing="6.0">
+                                    <children>
+                                        <Label text="Acteurs principaux (cast)" textFill="#b3b3b3"><font><Font name="System Bold" size="12.0" /></font></Label>
+                                        <TextField fx:id="castField" promptText="Ex : Di Caprio, Hardy, Page..." style="-fx-background-color: #252525; -fx-border-color: #2e2e2e; -fx-border-radius: 8; -fx-background-radius: 8; -fx-text-fill: white; -fx-prompt-text-fill: #444444; -fx-padding: 10 14 10 14;">
+                                            <font><Font size="13.0" /></font>
+                                        </TextField>
+                                    </children>
+                                </VBox>
+
+                            </children>
+                        </VBox>
+
+                        <!-- ── BARRE D'ACTIONS ── -->
+                        <HBox alignment="CENTER_RIGHT" spacing="12.0">
+                            <children>
+                                <!-- ✅ goBack() -->
+                                <Button mnemonicParsing="false" onAction="#goBack" style="-fx-background-color: transparent; -fx-text-fill: #b3b3b3; -fx-cursor: hand; -fx-border-color: #2e2e2e; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 11 28 11 28;" text="Annuler">
+                                    <font><Font name="System Bold" size="14.0" /></font>
+                                </Button>
+                                <!-- ✅ handleReset() -->
+                                <Button mnemonicParsing="false" onAction="#handleReset" style="-fx-background-color: #252525; -fx-text-fill: #b3b3b3; -fx-cursor: hand; -fx-border-color: #2e2e2e; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 11 28 11 28;" text="↺  Réinitialiser">
+                                    <font><Font name="System Bold" size="14.0" /></font>
+                                </Button>
+                                <!-- ✅ handleAddFilm() -->
+                                <Button mnemonicParsing="false" onAction="#handleAddFilm" style="-fx-background-color: #e50914; -fx-text-fill: white; -fx-cursor: hand; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 11 32 11 32;" text="＋  Ajouter le Film">
+                                    <font><Font name="System Bold" size="14.0" /></font>
+                                </Button>
+                            </children>
+                        </HBox>
+
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

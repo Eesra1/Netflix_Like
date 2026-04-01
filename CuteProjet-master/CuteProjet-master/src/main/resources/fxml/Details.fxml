@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fitToWidth="true" style="-fx-background: #141414; -fx-background-color: #141414;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jstream.controller.DetailsController">
+    <content>
+        <VBox spacing="20.0" style="-fx-background-color: #141414;">
+            <children>
+
+                <HBox>
+                    <VBox.margin><Insets left="20.0" top="20.0" /></VBox.margin>
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#goBack" style="-fx-background-color: transparent; -fx-cursor: hand;" text="← Retour au Dashboard" textFill="WHITE">
+                            <font><Font name="System Bold" size="16.0" /></font>
+                        </Button>
+                    </children>
+                </HBox>
+
+                <StackPane alignment="BOTTOM_LEFT" prefHeight="400.0">
+                    <children>
+                        <ImageView fx:id="bannerImage" fitHeight="400.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="false">
+                            <image><Image url="@../img/image.jpg.jpeg" /></image>
+                        </ImageView>
+
+                        <VBox alignment="BOTTOM_LEFT" spacing="15.0" style="-fx-background-color: linear-gradient(to top, #141414, transparent); -fx-padding: 0 0 30 40;">
+                            <children>
+                                <Label fx:id="titleLabel" text="TITRE DU FILM OU SÉRIE" textFill="WHITE">
+                                    <font><Font name="System Bold" size="48.0" /></font>
+                                </Label>
+                                <HBox alignment="CENTER_LEFT" spacing="15.0">
+                                    <children>
+                                        <Button mnemonicParsing="false" onAction="#playVideo" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: white; -fx-cursor: hand;" text="▶ Lecture">
+                                            <font><Font name="System Bold" size="16.0" /></font>
+                                        </Button>
+                                        <Button fx:id="myListButton" mnemonicParsing="false" onAction="#toggleMyList" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: rgba(109, 109, 110, 0.7); -fx-cursor: hand;" text="+ Ma Liste" textFill="WHITE">
+                                            <font><Font name="System Bold" size="16.0" /></font>
+                                        </Button>
+                                        <Label text="Note globale: ★★★★☆" textFill="#e50914">
+                                            <font><Font size="20.0" /></font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </StackPane>
+
+                <HBox spacing="40.0">
+                    <padding><Insets left="40.0" right="40.0" /></padding>
+                    <children>
+
+                        <VBox spacing="15.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Synopsis" textFill="WHITE">
+                                    <font><Font name="System Bold" size="20.0" /></font>
+                                </Label>
+                                <Label fx:id="synopsisLabel" text="Le résumé du film apparaîtra ici. C'est l'histoire incroyable de..." textFill="#cccccc" wrapText="true">
+                                    <font><Font size="15.0" /></font>
+                                </Label>
+
+                                <HBox spacing="10.0">
+                                    <Label text="Casting :" textFill="WHITE"><font><Font name="System Bold" size="14.0" /></font></Label>
+                                    <Label fx:id="castLabel" text="Acteur 1, Acteur 2, Acteur 3" textFill="#cccccc" />
+                                </HBox>
+
+                                <HBox spacing="10.0">
+                                    <Label text="Date de sortie :" textFill="WHITE"><font><Font name="System Bold" size="14.0" /></font></Label>
+                                    <Label fx:id="dateLabel" text="2024" textFill="#cccccc" />
+                                </HBox>
+
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <VBox.margin><Insets top="20.0" /></VBox.margin>
+                                    <children>
+                                        <Label text="Noter ce titre :" textFill="WHITE" />
+                                        <ComboBox fx:id="ratingComboBox" prefWidth="100.0" promptText="Étoiles" />
+                                        <Button mnemonicParsing="false" onAction="#submitRating" style="-fx-background-color: #e50914; -fx-cursor: hand;" text="Valider" textFill="WHITE" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <VBox fx:id="seriesSection" prefWidth="400.0" spacing="10.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                                    <children>
+                                        <Label text="Épisodes" textFill="WHITE">
+                                            <font><Font name="System Bold" size="20.0" /></font>
+                                        </Label>
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <ComboBox fx:id="seasonComboBox" prefWidth="120.0" promptText="Saison 1" />
+                                    </children>
+                                </HBox>
+                                <ListView fx:id="episodesListView" prefHeight="250.0" style="-fx-background-color: #141414; -fx-control-inner-background: #141414; -fx-border-color: #333;" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <VBox spacing="15.0">
+                    <padding><Insets bottom="40.0" left="40.0" right="40.0" top="20.0" /></padding>
+                    <children>
+                        <Label text="Commentaires" textFill="WHITE">
+                            <font><Font name="System Bold" size="20.0" /></font>
+                        </Label>
+                        <HBox spacing="10.0">
+                            <children>
+                                <TextArea fx:id="commentTextArea" prefHeight="60.0" promptText="Ajouter un avis sur ce film..." wrapText="true" HBox.hgrow="ALWAYS" />
+                                <Button mnemonicParsing="false" onAction="#postComment" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #e50914; -fx-cursor: hand;" text="Publier" textFill="WHITE">
+                                    <font><Font name="System Bold" size="14.0" /></font>
+                                </Button>
+                            </children>
+                        </HBox>
+
+                        <VBox fx:id="commentsContainer" spacing="10.0">
+                            <VBox style="-fx-background-color: #222; -fx-padding: 10; -fx-background-radius: 5;">
+                                <Label text="Utilisateur Test - ★★★★★" textFill="#e50914"><font><Font name="System Bold" size="12.0" /></font></Label>
+                                <Label text="Incroyable chef-d'œuvre ! À voir absolument." textFill="WHITE" />
+                            </VBox>
+                        </VBox>
+                    </children>
+                </VBox>
+
+            </children>
+        </VBox>
+    </content>
+</ScrollPane>
