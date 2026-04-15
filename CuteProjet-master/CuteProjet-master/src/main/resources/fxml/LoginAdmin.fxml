@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #0f172a;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jstream.controller.LoginController">
+<StackPane prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #0f172a;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jstream.controller.LoginAdminController">
     <children>
         <VBox alignment="CENTER" spacing="50.0">
             <children>
-                <Label text="User Login" textFill="WHITE">
+                <Label text="Admin Login" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="42.0" />
                     </font>
@@ -44,17 +44,12 @@
                     </children>
                 </HBox>
 
-                <Hyperlink onAction="#goToRegister" text="Create Account" textFill="#e50914">
+                <Hyperlink onAction="#goToUserLogin" text="User Login" textFill="#e50914">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Hyperlink>
             </children>
         </VBox>
-        <Button mnemonicParsing="false" onAction="#goToLoginAdmin" style="-fx-background-color: transparent; -fx-text-fill: #94a3b8; -fx-cursor: hand;" text="Login Admin" StackPane.alignment="BOTTOM_RIGHT" translateY="-20.0" translateX="-20.0">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Button>
     </children>
 </StackPane>

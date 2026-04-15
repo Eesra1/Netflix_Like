@@ -13,15 +13,33 @@ public class AdminService {
 
 
     // 2. VOS DAO
-    static FilmDAO filmDAO = new FilmDAO();
+    AdminDAO adminDAO = new AdminDAO();
+    FilmDAO filmDAO = new FilmDAO();
     SeriesDAO seriesDAO = new SeriesDAO();
+
+    public Admin login(String email, String password) throws Exception {
+        Admin admin = adminDAO.findByEmail(email);
+        if (admin != null) {
+            if (password.equals(admin.getPassword())) {
+                return admin;
+            }
+            try {
+                if (org.mindrot.jbcrypt.BCrypt.checkpw(password, admin.getPassword())) {
+                    return admin;
+                }
+            } catch (Exception e) {
+                // Ignore bcrypt exception if plain text fallback was already checked
+            }
+        }
+        return null;
+    }
     SeasonDAO seasonDAO = new SeasonDAO();
     EpisodeDAO episodeDAO = new EpisodeDAO();
     CategoryDAO categoryDAO = new CategoryDAO();
     CommentDAO commentDAO = new CommentDAO();
 
     // 3. VOS MÉTHODES DAO
-    public static  void addFilm(Film f) throws Exception {
+    public void addFilm(Film f) throws Exception {
         filmDAO.add(f);
     }
 
@@ -35,6 +53,10 @@ public class AdminService {
 
     public void addSeries(Series s) throws Exception {
         seriesDAO.add(s);
+    }
+
+    public void updateSeries(Series s) throws Exception {
+        seriesDAO.update(s);
     }
 
     public void deleteSeries(int id) throws Exception {
@@ -53,6 +75,10 @@ public class AdminService {
         categoryDAO.add(c);
     }
 
+    public void updateCategory(Category c) throws Exception {
+        categoryDAO.update(c);
+    }
+
     public void deleteCategory(int id) throws Exception {
         categoryDAO.delete(id);
     }
@@ -67,7 +93,17 @@ public class AdminService {
     public List<Category> getAllCategories() throws Exception {
         return categoryDAO.findAll();
     }
+    
+    public List<Series> getAllSeries() throws Exception {
+        return seriesDAO.findAll();
+    }
 
-
+    public List<Season> getAllSeasons() throws Exception {
+        return seasonDAO.findAll();
+    }
+    
+    public List<Season> getSeasonsBySeries(int seriesId) throws Exception {
+        return seasonDAO.findBySeries(seriesId);
+    }
 
 }

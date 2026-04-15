@@ -33,7 +33,7 @@
       directorField, statusComboBox
 -->
 
-<BorderPane prefHeight="789.0" prefWidth="687.0" style="-fx-background-color: #141414;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jstream.controller.DashboardController">
+<BorderPane prefHeight="789.0" prefWidth="687.0" style="-fx-background-color: #141414;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jstream.controller.DashboardAdminController">
 
     <!-- ═══════════════ TOP — HEADER ═══════════════ -->
     <top>

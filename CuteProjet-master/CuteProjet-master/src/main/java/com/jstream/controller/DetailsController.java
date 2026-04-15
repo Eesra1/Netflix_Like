@@ -34,10 +34,8 @@ public class DetailsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ratingComboBox.setItems(FXCollections.observableArrayList("1 Étoile", "2 Étoiles", "3 Étoiles", "4 Étoiles", "5 Étoiles"));
-
         seasonComboBox.setItems(FXCollections.observableArrayList("Saison 1", "Saison 2"));
         seasonComboBox.getSelectionModel().selectFirst();
-
         episodesListView.setItems(FXCollections.observableArrayList(
                 "1. Le commencement (45 min) - Vu",
                 "2. La trahison (50 min) - En cours",
@@ -95,7 +93,7 @@ public class DetailsController implements Initializable {
         if (!texte.trim().isEmpty()) {
             System.out.println("Nouveau commentaire : " + texte);
             commentTextArea.clear();
-            // TODO : Plus tard, l'insérer dans la base de données et l'afficher
+            // TODO : plus tard inserer dans la base de donnes et l'afficher
         }
     }
 }

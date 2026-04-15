@@ -20,70 +20,94 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="562.0" prefWidth="827.0" style="-fx-background-color: #141414;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jstream.controller.DashboardController">
+<BorderPane prefHeight="700.0" prefWidth="1100.0"
+            style="-fx-background-color: #141414;"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.jstream.controller.DashboardAdminController">
 
     <!-- ═══════════════════════════════════════════════
          LEFT — SIDEBAR
     ═══════════════════════════════════════════════ -->
     <left>
-        <VBox minWidth="220.0" prefWidth="220.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-width: 0 1 0 0;" BorderPane.alignment="TOP_LEFT">
+        <VBox minWidth="220.0" prefWidth="220.0"
+              style="-fx-background-color:#1e1e1e;-fx-border-color:#2e2e2e;-fx-border-width:0 1 0 0;"
+              BorderPane.alignment="TOP_LEFT">
             <children>
 
                 <!-- Logo -->
-                <HBox alignment="CENTER_LEFT" prefHeight="64.0" style="-fx-border-color: #2e2e2e; -fx-border-width: 0 0 1 0;">
-                    <padding><Insets bottom="16.0" left="24.0" right="24.0" top="16.0" /></padding>
+                <HBox alignment="CENTER_LEFT" prefHeight="64.0"
+                      style="-fx-border-color:#2e2e2e;-fx-border-width:0 0 1 0;">
+                    <padding><Insets bottom="16" left="24" right="24" top="16"/></padding>
                     <children>
                         <Label text="JSTREAM" textFill="#e50914">
-                            <font><Font name="System Bold" size="26.0" /></font>
+                            <font><Font name="System Bold" size="26"/></font>
                         </Label>
                     </children>
                 </HBox>
 
-                <!-- Nav section: Principal -->
-                <Label style="-fx-padding: 18 14 6 14;" text="PRINCIPAL" textFill="#555555">
-                    <font><Font name="System Bold" size="10.0" /></font>
+                <Label style="-fx-padding:18 14 6 14;" text="PRINCIPAL" textFill="#555555">
+                    <font><Font name="System Bold" size="10"/></font>
                 </Label>
 
                 <!-- Dashboard (active) -->
-                <HBox fx:id="navDashboard" alignment="CENTER_LEFT" prefHeight="42.0" spacing="10.0" style="-fx-background-color: rgba(229,9,20,0.12); -fx-border-color: #e50914 transparent transparent transparent; -fx-border-width: 0 0 0 3; -fx-cursor: hand;">
-                    <padding><Insets bottom="0.0" left="20.0" right="20.0" top="0.0" /></padding>
+                <HBox alignment="CENTER_LEFT" prefHeight="42" spacing="10"
+                      style="-fx-background-color:rgba(229,9,20,0.12);-fx-border-color:#e50914 transparent transparent transparent;-fx-border-width:0 0 0 3;-fx-cursor:hand;">
+                    <padding><Insets left="20" right="20"/></padding>
                     <children>
-                        <Label prefWidth="20.0" style="-fx-alignment: CENTER;" text="⊞" textFill="WHITE"><font><Font size="15.0" /></font></Label>
-                        <Label text="Dashboard" textFill="WHITE"><font><Font name="System Bold" size="13.0" /></font></Label>
+                        <Label prefWidth="20" style="-fx-alignment:CENTER;" text="⊞" textFill="WHITE">
+                            <font><Font size="15"/></font>
+                        </Label>
+                        <Label text="Dashboard" textFill="WHITE">
+                            <font><Font name="System Bold" size="13"/></font>
+                        </Label>
                     </children>
                 </HBox>
 
                 <!-- Films -->
-                <HBox alignment="CENTER_LEFT" prefHeight="42.0" spacing="10.0" style="-fx-background-color: transparent;">
-                    <padding><Insets bottom="0.0" left="20.0" right="20.0" top="0.0" /></padding>
+                <HBox alignment="CENTER_LEFT" prefHeight="42" spacing="10"
+                      style="-fx-background-color:transparent;">
+                    <padding><Insets left="20" right="20"/></padding>
                     <children>
-                        <Label prefWidth="20.0" style="-fx-alignment: CENTER;" text="🎬" textFill="#b3b3b3"><font><Font size="13.0" /></font></Label>
-                        <!-- ✅ goToFilmList() -->
-                        <Button mnemonicParsing="false" onAction="#goToFilmList" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;" text="Films" textFill="#b3b3b3">
-                            <font><Font size="13.0" /></font>
+                        <Label prefWidth="20" text="🎬" textFill="#b3b3b3">
+                            <font><Font size="13"/></font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#goToFilmList"
+                                style="-fx-background-color:transparent;-fx-cursor:hand;-fx-padding:0;"
+                                text="Films" textFill="#b3b3b3">
+                            <font><Font size="13"/></font>
                         </Button>
                     </children>
                 </HBox>
 
                 <!-- Séries -->
-                <HBox alignment="CENTER_LEFT" prefHeight="42.0" spacing="10.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
-                    <padding><Insets bottom="0.0" left="20.0" right="20.0" top="0.0" /></padding>
+                <HBox alignment="CENTER_LEFT" prefHeight="42" spacing="10"
+                      style="-fx-background-color:transparent;-fx-cursor:hand;">
+                    <padding><Insets left="20" right="20"/></padding>
                     <children>
-                        <Label prefWidth="20.0" style="-fx-alignment: CENTER;" text="📺" textFill="#b3b3b3"><font><Font size="13.0" /></font></Label>
-                        <!--  goToSeries() -->
-                        <Button mnemonicParsing="false" onAction="#goToSeries" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;" text="Séries" textFill="#b3b3b3">
-                            <font><Font size="13.0" /></font>
+                        <Label prefWidth="20" text="📺" textFill="#b3b3b3">
+                            <font><Font size="13"/></font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#goToSeries"
+                                style="-fx-background-color:transparent;-fx-cursor:hand;-fx-padding:0;"
+                                text="Séries" textFill="#b3b3b3">
+                            <font><Font size="13"/></font>
                         </Button>
                     </children>
                 </HBox>
 
-                <!-- NOUVEAU — Épisodes → goToEpisodes() -->
-                <HBox alignment="CENTER_LEFT" prefHeight="42.0" spacing="10.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
-                    <padding><Insets bottom="0.0" left="20.0" right="20.0" top="0.0" /></padding>
+                <!-- Épisodes -->
+                <HBox alignment="CENTER_LEFT" prefHeight="42" spacing="10"
+                      style="-fx-background-color:transparent;-fx-cursor:hand;">
+                    <padding><Insets left="20" right="20"/></padding>
                     <children>
-                        <Label prefWidth="20.0" style="-fx-alignment: CENTER;" text="▶" textFill="#b3b3b3"><font><Font size="13.0" /></font></Label>
-                        <Button mnemonicParsing="false" onAction="#goToEpisodes" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;" text="Épisodes" textFill="#b3b3b3">
-                            <font><Font size="13.0" /></font>
+                        <Label prefWidth="20" text="▶" textFill="#b3b3b3">
+                            <font><Font size="13"/></font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#goToEpisodes"
+                                style="-fx-background-color:transparent;-fx-cursor:hand;-fx-padding:0;"
+                                text="Épisodes" textFill="#b3b3b3">
+                            <font><Font size="13"/></font>
                         </Button>
                     </children>
                 </HBox>
@@ -93,48 +117,49 @@
                     <padding><Insets bottom="0.0" left="20.0" right="20.0" top="0.0" /></padding>
                     <children>
                         <Label prefWidth="20.0" style="-fx-alignment: CENTER;" text="👥" textFill="#b3b3b3"><font><Font size="13.0" /></font></Label>
-                        <Label text="Abonnés" textFill="#b3b3b3"><font><Font size="13.0" /></font></Label>
+                        <Button mnemonicParsing="false" onAction="#goToSubscribers"
+                                style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;"
+                                text="Abonnés" textFill="#b3b3b3"/>
+                        <!-- <Label text="Abonnés" textFill="#b3b3b3"><font><Font size="13.0" /></font></Label> -->
                     </children>
                 </HBox>
 
-                <!-- Nav section: Paramètres -->
-                <Label style="-fx-padding: 18 14 6 14;" text="PARAMÈTRES" textFill="#555555">
-                    <font><Font name="System Bold" size="10.0" /></font>
+                <Label style="-fx-padding:18 14 6 14;" text="PARAMÈTRES" textFill="#555555">
+                    <font><Font name="System Bold" size="10"/></font>
                 </Label>
 
-                <!-- Paramètres globaux -->
-                <HBox alignment="CENTER_LEFT" prefHeight="42.0" spacing="10.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
-                    <padding><Insets bottom="0.0" left="20.0" right="20.0" top="0.0" /></padding>
-                    <children>
-                        <Label prefWidth="20.0" style="-fx-alignment: CENTER;" text="⚙" textFill="#b3b3b3"><font><Font size="13.0" /></font></Label>
-                        <Label text="Paramètres globaux" textFill="#b3b3b3"><font><Font size="13.0" /></font></Label>
-                    </children>
-                </HBox>
 
-                <!-- Spacer -->
-                <Region VBox.vgrow="ALWAYS" />
 
-                <!-- Footer utilisateur avec bouton déconnexion -->
-                <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="10.0" style="-fx-border-color: #2e2e2e; -fx-border-width: 1 0 0 0;">
-                    <padding><Insets bottom="12.0" left="20.0" right="20.0" top="12.0" /></padding>
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <!-- Footer -->
+                <HBox alignment="CENTER_LEFT" prefHeight="60" spacing="10"
+                      style="-fx-border-color:#2e2e2e;-fx-border-width:1 0 0 0;">
+                    <padding><Insets bottom="12" left="20" right="20" top="12"/></padding>
                     <children>
-                        <StackPane prefHeight="36.0" prefWidth="36.0" style="-fx-background-color: #e50914; -fx-background-radius: 18;">
+                        <StackPane prefHeight="36" prefWidth="36"
+                                   style="-fx-background-color:#e50914;-fx-background-radius:18;">
                             <children>
                                 <Label text="AD" textFill="WHITE">
-                                    <font><Font name="System Bold" size="13.0" /></font>
+                                    <font><Font name="System Bold" size="13"/></font>
                                 </Label>
                             </children>
                         </StackPane>
-                        <VBox spacing="2.0">
+                        <VBox spacing="2">
                             <children>
-                                <Label text="Admin" textFill="WHITE"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                <Label text="Super Admin" textFill="#b3b3b3"><font><Font size="11.0" /></font></Label>
+                                <Label text="Admin" textFill="WHITE">
+                                    <font><Font name="System Bold" size="13"/></font>
+                                </Label>
+                                <Label text="Super Admin" textFill="#b3b3b3">
+                                    <font><Font size="11"/></font>
+                                </Label>
                             </children>
                         </VBox>
-                        <Region HBox.hgrow="ALWAYS" />
-                        <!-- ✅ handleLogout() -->
-                        <Button mnemonicParsing="false" onAction="#handleLogout" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-text-fill: #b3b3b3;" text="⏻">
-                            <font><Font size="18.0" /></font>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button mnemonicParsing="false" onAction="#handleLogout"
+                                style="-fx-background-color:transparent;-fx-cursor:hand;-fx-text-fill:#b3b3b3;"
+                                text="⏻">
+                            <font><Font size="18"/></font>
                         </Button>
                     </children>
                 </HBox>
@@ -144,23 +169,37 @@
     </left>
 
     <!-- ═══════════════════════════════════════════════
-         TOP — HEADER BAR
+         TOP — HEADER BAR  (avec barre de recherche fonctionnelle)
     ═══════════════════════════════════════════════ -->
     <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="14.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
-            <padding><Insets bottom="10.0" left="28.0" right="28.0" top="10.0" /></padding>
+        <HBox alignment="CENTER_LEFT" prefHeight="60" spacing="14"
+              style="-fx-background-color:#1e1e1e;-fx-border-color:#2e2e2e;-fx-border-width:0 0 1 0;"
+              BorderPane.alignment="CENTER">
+            <padding><Insets bottom="10" left="28" right="28" top="10"/></padding>
             <children>
 
                 <Label text="Dashboard" textFill="WHITE">
-                    <font><Font name="System Bold" size="20.0" /></font>
+                    <font><Font name="System Bold" size="20"/></font>
                 </Label>
 
-                <Region HBox.hgrow="ALWAYS" />
+                <Region HBox.hgrow="ALWAYS"/>
 
-                <!-- ✅ fx:id searchField utilisé dans initialize() -->
-                <TextField fx:id="searchField" prefWidth="220.0" promptText="Titres, genres, années..." style="-fx-background-color: #252525; -fx-border-color: #2e2e2e; -fx-border-radius: 6; -fx-background-radius: 6; -fx-text-fill: white; -fx-prompt-text-fill: #555555; -fx-padding: 7 14 7 14;" />
+                <!-- Recherche : filtre le tableau topContentTable en temps réel -->
+                <TextField fx:id="searchField" prefWidth="260"
+                           promptText="Rechercher titres, genres..."
+                           style="-fx-background-color:#252525;-fx-border-color:#2e2e2e;
+                                  -fx-border-radius:6;-fx-background-radius:6;
+                                  -fx-text-fill:white;-fx-prompt-text-fill:#555555;
+                                  -fx-padding:7 14 7 14;"/>
 
-                <!-- ❌ Bouton 🔔 supprimé — aucune méthode dans le controller -->
+                <!-- Bouton "Actualiser" les métriques -->
+                <Button mnemonicParsing="false" onAction="#handleRefreshDashboard"
+                        style="-fx-background-color:#252525;-fx-text-fill:#b3b3b3;
+                               -fx-border-color:#2e2e2e;-fx-border-radius:6;-fx-background-radius:6;
+                               -fx-padding:7 14 7 14;-fx-cursor:hand;"
+                        text="↻ Actualiser">
+                    <font><Font size="13"/></font>
+                </Button>
 
             </children>
         </HBox>
@@ -170,119 +209,175 @@
          CENTER — CONTENU PRINCIPAL
     ═══════════════════════════════════════════════ -->
     <center>
-        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: #141414; -fx-border-color: #141414;" BorderPane.alignment="CENTER">
+        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER"
+                    style="-fx-background:#141414;-fx-border-color:#141414;"
+                    BorderPane.alignment="CENTER">
             <content>
-                <VBox spacing="20.0" style="-fx-background-color: #141414;" VBox.vgrow="ALWAYS">
-                    <padding><Insets bottom="28.0" left="28.0" right="28.0" top="28.0" /></padding>
+                <VBox spacing="20"
+                      style="-fx-background-color:#141414;"
+                      VBox.vgrow="ALWAYS">
+                    <padding><Insets bottom="28" left="28" right="28" top="28"/></padding>
                     <children>
 
-                        <!-- ── RANGÉE 1 : CARTES MÉTRIQUES ───────────────── -->
-                        <GridPane hgap="16.0">
+                        <!-- ── RANGÉE 1 : CARTES MÉTRIQUES ─────────────── -->
+                        <GridPane hgap="16">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33" />
-                                <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33" />
-                                <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33" />
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33"/>
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33"/>
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33"/>
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS"/>
                             </rowConstraints>
                             <children>
 
-                                <!-- Carte 1 : Vues Totales -->
-                                <VBox spacing="12.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-radius: 10; -fx-background-radius: 10;" GridPane.columnIndex="0">
-                                    <padding><Insets bottom="20.0" left="22.0" right="22.0" top="20.0" /></padding>
+                                <!-- Carte 1 : Contenus totaux -->
+                                <VBox spacing="12"
+                                      style="-fx-background-color:#1e1e1e;-fx-border-color:#2e2e2e;-fx-border-radius:10;-fx-background-radius:10;"
+                                      GridPane.columnIndex="0">
+                                    <padding><Insets bottom="20" left="22" right="22" top="20"/></padding>
                                     <children>
                                         <HBox alignment="CENTER_LEFT">
                                             <children>
-                                                <VBox spacing="2.0">
+                                                <VBox spacing="2">
                                                     <children>
-                                                        <Label text="Vues Totales" textFill="#b3b3b3"><font><Font name="System Bold" size="12.0" /></font></Label>
-                                                        <Label text="7 derniers jours" textFill="#555555"><font><Font size="11.0" /></font></Label>
+                                                        <Label text="Contenus Totaux" textFill="#b3b3b3">
+                                                            <font><Font name="System Bold" size="12"/></font>
+                                                        </Label>
+                                                        <Label text="Films + Séries en catalogue" textFill="#555555">
+                                                            <font><Font size="11"/></font>
+                                                        </Label>
                                                     </children>
                                                 </VBox>
-                                                <Region HBox.hgrow="ALWAYS" />
-                                                <Label text="•••" textFill="#555555"><font><Font size="16.0" /></font></Label>
+                                                <Region HBox.hgrow="ALWAYS"/>
+                                                <!-- Bouton raccourci Films -->
+                                                <Button mnemonicParsing="false" onAction="#goToFilmList"
+                                                        style="-fx-background-color:transparent;-fx-cursor:hand;"
+                                                        text="🎬" textFill="#555555">
+                                                    <font><Font size="16"/></font>
+                                                </Button>
                                             </children>
                                         </HBox>
-                                        <Label fx:id="totalViewsLabel" text="12.4M" textFill="WHITE">
-                                            <font><Font name="System Bold" size="40.0" /></font>
+                                        <Label fx:id="totalViewsLabel" text="—" textFill="WHITE">
+                                            <font><Font name="System Bold" size="36"/></font>
                                         </Label>
-                                        <Separator style="-fx-background-color: #2e2e2e;" />
+                                        <Separator style="-fx-background-color:#2e2e2e;"/>
                                         <HBox alignment="CENTER_LEFT">
                                             <children>
-                                                <Label text="↑ 10.4%  " textFill="#46d369"><font><Font name="System Bold" size="12.0" /></font></Label>
-                                                <Label text="vs sem. précédente" textFill="#b3b3b3"><font><Font size="12.0" /></font></Label>
+                                                <Label text="↑ mis à jour en temps réel" textFill="#46d369">
+                                                    <font><Font name="System Bold" size="11"/></font>
+                                                </Label>
                                             </children>
                                         </HBox>
                                     </children>
                                 </VBox>
 
-                                <!-- Carte 2 : Abonnés Actifs -->
-                                <VBox spacing="12.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-radius: 10; -fx-background-radius: 10;" GridPane.columnIndex="1">
-                                    <padding><Insets bottom="20.0" left="22.0" right="22.0" top="20.0" /></padding>
+                                <!-- Carte 2 : Utilisateurs -->
+                                <VBox spacing="12"
+                                      style="-fx-background-color:#1e1e1e;-fx-border-color:#2e2e2e;-fx-border-radius:10;-fx-background-radius:10;"
+                                      GridPane.columnIndex="1">
+                                    <padding><Insets bottom="20" left="22" right="22" top="20"/></padding>
                                     <children>
                                         <HBox alignment="CENTER_LEFT">
                                             <children>
-                                                <VBox spacing="2.0">
+                                                <VBox spacing="2">
                                                     <children>
-                                                        <Label text="Abonnés Actifs" textFill="#b3b3b3"><font><Font name="System Bold" size="12.0" /></font></Label>
-                                                        <Label text="7 derniers jours" textFill="#555555"><font><Font size="11.0" /></font></Label>
+                                                        <Label text="Utilisateurs" textFill="#b3b3b3">
+                                                            <font><Font name="System Bold" size="12"/></font>
+                                                        </Label>
+                                                        <Label text="Inscrits sur la plateforme" textFill="#555555">
+                                                            <font><Font size="11"/></font>
+                                                        </Label>
                                                     </children>
                                                 </VBox>
-                                                <Region HBox.hgrow="ALWAYS" />
-                                                <Label text="•••" textFill="#555555"><font><Font size="16.0" /></font></Label>
+                                                <Region HBox.hgrow="ALWAYS"/>
+                                                <Label text="👥" textFill="#555555">
+                                                    <font><Font size="16"/></font>
+                                                </Label>
                                             </children>
                                         </HBox>
-                                        <Label fx:id="totalSubscribersLabel" text="9.6K" textFill="WHITE">
-                                            <font><Font name="System Bold" size="40.0" /></font>
+                                        <Label fx:id="totalSubscribersLabel" text="—" textFill="WHITE">
+                                            <font><Font name="System Bold" size="36"/></font>
                                         </Label>
-                                        <Separator style="-fx-background-color: #2e2e2e;" />
+                                        <Separator style="-fx-background-color:#2e2e2e;"/>
                                         <HBox alignment="CENTER_LEFT">
                                             <children>
-                                                <Label text="↑ 14.4%  " textFill="#46d369"><font><Font name="System Bold" size="12.0" /></font></Label>
-                                                <Label text="nouveaux inscrits" textFill="#b3b3b3"><font><Font size="12.0" /></font></Label>
+                                                <Label text="↑ nouveaux inscrits" textFill="#46d369">
+                                                    <font><Font name="System Bold" size="11"/></font>
+                                                </Label>
                                             </children>
                                         </HBox>
                                     </children>
                                 </VBox>
 
-                                <!-- Carte 3 : En attente & Annulés -->
-                                <VBox spacing="12.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-radius: 10; -fx-background-radius: 10;" GridPane.columnIndex="2">
-                                    <padding><Insets bottom="20.0" left="22.0" right="22.0" top="20.0" /></padding>
+                                <!-- Carte 3 : Films vs Séries -->
+                                <VBox spacing="12"
+                                      style="-fx-background-color:#1e1e1e;-fx-border-color:#2e2e2e;-fx-border-radius:10;-fx-background-radius:10;"
+                                      GridPane.columnIndex="2">
+                                    <padding><Insets bottom="20" left="22" right="22" top="20"/></padding>
                                     <children>
                                         <HBox alignment="CENTER_LEFT">
                                             <children>
-                                                <VBox spacing="2.0">
+                                                <VBox spacing="2">
                                                     <children>
-                                                        <Label text="En attente &amp; Annulés" textFill="#b3b3b3"><font><Font name="System Bold" size="12.0" /></font></Label>
-                                                        <Label text="7 derniers jours" textFill="#555555"><font><Font size="11.0" /></font></Label>
+                                                        <Label text="Films &amp; Séries" textFill="#b3b3b3">
+                                                            <font><Font name="System Bold" size="12"/></font>
+                                                        </Label>
+                                                        <Label text="Répartition du catalogue" textFill="#555555">
+                                                            <font><Font size="11"/></font>
+                                                        </Label>
                                                     </children>
                                                 </VBox>
-                                                <Region HBox.hgrow="ALWAYS" />
-                                                <Label text="•••" textFill="#555555"><font><Font size="16.0" /></font></Label>
+                                                <Region HBox.hgrow="ALWAYS"/>
                                             </children>
                                         </HBox>
-                                        <HBox alignment="CENTER_LEFT" spacing="24.0">
+                                        <HBox alignment="CENTER_LEFT" spacing="24">
                                             <children>
-                                                <VBox spacing="4.0">
+                                                <VBox spacing="4">
                                                     <children>
-                                                        <Label text="En attente" textFill="#b3b3b3"><font><Font size="11.0" /></font></Label>
-                                                        <Label fx:id="pendingLabel" text="509" textFill="WHITE"><font><Font name="System Bold" size="28.0" /></font></Label>
-                                                        <Label text="↑ utilisateur 204" textFill="#46d369"><font><Font name="System Bold" size="10.0" /></font></Label>
+                                                        <Label text="Films" textFill="#b3b3b3">
+                                                            <font><Font size="11"/></font>
+                                                        </Label>
+                                                        <Label fx:id="pendingLabel" text="—" textFill="WHITE">
+                                                            <font><Font name="System Bold" size="26"/></font>
+                                                        </Label>
+                                                        <Label text="🎬 en catalogue" textFill="#46d369">
+                                                            <font><Font name="System Bold" size="10"/></font>
+                                                        </Label>
                                                     </children>
                                                 </VBox>
-                                                <Rectangle fill="#2e2e2e" height="60.0" width="1.0" />
-                                                <VBox spacing="4.0">
+                                                <Rectangle fill="#2e2e2e" height="60" width="1"/>
+                                                <VBox spacing="4">
                                                     <children>
-                                                        <Label text="Annulés" textFill="#b3b3b3"><font><Font size="11.0" /></font></Label>
-                                                        <Label fx:id="canceledLabel" text="94" textFill="#ff4444"><font><Font name="System Bold" size="28.0" /></font></Label>
-                                                        <Label text="↓ 14.4%" textFill="#ff4444"><font><Font name="System Bold" size="10.0" /></font></Label>
+                                                        <Label text="Séries" textFill="#b3b3b3">
+                                                            <font><Font size="11"/></font>
+                                                        </Label>
+                                                        <Label fx:id="canceledLabel" text="—" textFill="#e50914">
+                                                            <font><Font name="System Bold" size="26"/></font>
+                                                        </Label>
+                                                        <Label text="📺 en catalogue" textFill="#e50914">
+                                                            <font><Font name="System Bold" size="10"/></font>
+                                                        </Label>
                                                     </children>
                                                 </VBox>
                                             </children>
                                         </HBox>
-                                        <Separator style="-fx-background-color: #2e2e2e;" />
-                                        <HBox alignment="CENTER_RIGHT" />
+                                        <Separator style="-fx-background-color:#2e2e2e;"/>
+                                        <!-- Raccourcis d'ajout rapide -->
+                                        <HBox spacing="8" alignment="CENTER_LEFT">
+                                            <children>
+                                                <Button mnemonicParsing="false" onAction="#openAddFilm"
+                                                        style="-fx-background-color:#e50914;-fx-text-fill:white;-fx-cursor:hand;-fx-border-radius:5;-fx-background-radius:5;-fx-padding:4 10 4 10;"
+                                                        text="＋ Film">
+                                                    <font><Font size="11"/></font>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onAction="#openAddSeries"
+                                                        style="-fx-background-color:#333;-fx-text-fill:white;-fx-cursor:hand;-fx-border-radius:5;-fx-background-radius:5;-fx-padding:4 10 4 10;"
+                                                        text="＋ Série">
+                                                    <font><Font size="11"/></font>
+                                                </Button>
+                                            </children>
+                                        </HBox>
                                     </children>
                                 </VBox>
 
@@ -290,111 +385,186 @@
                         </GridPane>
 
                         <!-- ── RANGÉE 2 : GRAPHIQUES ─────────────────────── -->
-                        <GridPane hgap="16.0">
+                        <GridPane hgap="16">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="ALWAYS" percentWidth="62.0" />
-                                <ColumnConstraints hgrow="ALWAYS" percentWidth="38.0" />
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="62"/>
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="38"/>
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints minHeight="220.0" />
+                                <RowConstraints minHeight="220"/>
                             </rowConstraints>
                             <children>
 
-                                <!-- Graphique barres -->
-                                <VBox spacing="14.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-radius: 10; -fx-background-radius: 10;" GridPane.columnIndex="0">
-                                    <padding><Insets bottom="20.0" left="22.0" right="22.0" top="20.0" /></padding>
+                                <!-- Graphique en barres -->
+                                <VBox spacing="14"
+                                      style="-fx-background-color:#1e1e1e;-fx-border-color:#2e2e2e;-fx-border-radius:10;-fx-background-radius:10;"
+                                      GridPane.columnIndex="0">
+                                    <padding><Insets bottom="20" left="22" right="22" top="20"/></padding>
                                     <children>
                                         <HBox alignment="CENTER_LEFT">
                                             <children>
-                                                <Label text="Croissance des Vues" textFill="WHITE"><font><Font name="System Bold" size="15.0" /></font></Label>
-                                                <Region HBox.hgrow="ALWAYS" />
-                                                <ComboBox fx:id="barChartFilter" promptText="12 derniers mois" style="-fx-background-color: #252525; -fx-border-color: #2e2e2e; -fx-border-radius: 5; -fx-text-fill: #b3b3b3;" />
+                                                <Label text="Activité du Catalogue" textFill="WHITE">
+                                                    <font><Font name="System Bold" size="15"/></font>
+                                                </Label>
+                                                <Region HBox.hgrow="ALWAYS"/>
+                                                <!-- onAction déclenche refreshBarChart() -->
+                                                <ComboBox fx:id="barChartFilter"
+                                                          onAction="#onBarChartFilterChanged"
+                                                          promptText="12 derniers mois"
+                                                          style="-fx-background-color:#252525;-fx-border-color:#2e2e2e;-fx-border-radius:5;-fx-text-fill:#b3b3b3;"/>
                                             </children>
                                         </HBox>
-                                        <HBox fx:id="barChartBox" alignment="BOTTOM_LEFT" prefHeight="160.0" spacing="6.0" />
+                                        <!-- HBox construite dynamiquement par refreshBarChart() -->
+                                        <HBox fx:id="barChartBox"
+                                              alignment="BOTTOM_LEFT"
+                                              prefHeight="160"
+                                              spacing="4"/>
                                     </children>
                                 </VBox>
 
-                                <!-- Graphique ligne -->
-                                <VBox spacing="14.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-radius: 10; -fx-background-radius: 10;" GridPane.columnIndex="1">
-                                    <padding><Insets bottom="20.0" left="22.0" right="22.0" top="20.0" /></padding>
+                                <!-- Graphique courbe abonnés -->
+                                <VBox spacing="14"
+                                      style="-fx-background-color:#1e1e1e;-fx-border-color:#2e2e2e;-fx-border-radius:10;-fx-background-radius:10;"
+                                      GridPane.columnIndex="1">
+                                    <padding><Insets bottom="20" left="22" right="22" top="20"/></padding>
                                     <children>
                                         <HBox alignment="CENTER_LEFT">
                                             <children>
-                                                <Label text="Croissance Abonnés" textFill="WHITE"><font><Font name="System Bold" size="15.0" /></font></Label>
-                                                <Region HBox.hgrow="ALWAYS" />
-                                                <ComboBox fx:id="lineChartFilter" promptText="4 derniers mois" style="-fx-background-color: #252525; -fx-border-color: #2e2e2e; -fx-border-radius: 5; -fx-text-fill: #b3b3b3;" />
+                                                <Label text="Croissance Abonnés" textFill="WHITE">
+                                                    <font><Font name="System Bold" size="15"/></font>
+                                                </Label>
+                                                <Region HBox.hgrow="ALWAYS"/>
+                                                <ComboBox fx:id="lineChartFilter"
+                                                          onAction="#onLineChartFilterChanged"
+                                                          promptText="4 derniers mois"
+                                                          style="-fx-background-color:#252525;-fx-border-color:#2e2e2e;-fx-border-radius:5;-fx-text-fill:#b3b3b3;"/>
                                             </children>
                                         </HBox>
-                                        <StackPane fx:id="lineChartBox" prefHeight="160.0" />
+                                        <StackPane fx:id="lineChartBox" prefHeight="160"/>
                                     </children>
                                 </VBox>
 
                             </children>
                         </GridPane>
 
-                        <!-- ── RANGÉE 3 : TABLEAU + MINI CARTES ─────────── -->
-                        <GridPane hgap="16.0">
+                        <!-- ── RANGÉE 3 : TABLEAU TOP CONTENUS + CARTE ──── -->
+                        <GridPane hgap="16">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="ALWAYS" percentWidth="62.0" />
-                                <ColumnConstraints hgrow="ALWAYS" percentWidth="38.0" />
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="62"/>
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="38"/>
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS"/>
                             </rowConstraints>
                             <children>
 
                                 <!-- Tableau contenus les plus regardés -->
-                                <VBox spacing="14.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-radius: 10; -fx-background-radius: 10;" GridPane.columnIndex="0">
-                                    <padding><Insets bottom="20.0" left="22.0" right="22.0" top="20.0" /></padding>
+                                <VBox spacing="14"
+                                      style="-fx-background-color:#1e1e1e;-fx-border-color:#2e2e2e;-fx-border-radius:10;-fx-background-radius:10;"
+                                      GridPane.columnIndex="0">
+                                    <padding><Insets bottom="20" left="22" right="22" top="20"/></padding>
                                     <children>
-                                        <HBox alignment="CENTER_LEFT">
+                                        <HBox alignment="CENTER_LEFT" spacing="10">
                                             <children>
-                                                <Label text="Contenus les plus regardés" textFill="WHITE"><font><Font name="System Bold" size="15.0" /></font></Label>
+                                                <Label text="Catalogue (recherche en temps réel)" textFill="WHITE">
+                                                    <font><Font name="System Bold" size="15"/></font>
+                                                </Label>
+                                                <Region HBox.hgrow="ALWAYS"/>
+                                                <Button mnemonicParsing="false" onAction="#goToFilmList"
+                                                        style="-fx-background-color:transparent;-fx-text-fill:#b3b3b3;-fx-cursor:hand;-fx-border-color:#2e2e2e;-fx-border-radius:5;-fx-background-radius:5;-fx-padding:4 10 4 10;"
+                                                        text="Voir Films">
+                                                    <font><Font size="12"/></font>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onAction="#goToSeries"
+                                                        style="-fx-background-color:transparent;-fx-text-fill:#b3b3b3;-fx-cursor:hand;-fx-border-color:#2e2e2e;-fx-border-radius:5;-fx-background-radius:5;-fx-padding:4 10 4 10;"
+                                                        text="Voir Séries">
+                                                    <font><Font size="12"/></font>
+                                                </Button>
                                             </children>
                                         </HBox>
-                                        <TableView fx:id="topContentTable" prefHeight="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-table-cell-border-color: #2e2e2e;" VBox.vgrow="ALWAYS">
+                                        <TableView fx:id="topContentTable"
+                                                   prefHeight="250"
+                                                   style="-fx-background-color:transparent;-fx-border-color:transparent;-fx-table-cell-border-color:#2e2e2e;"
+                                                   VBox.vgrow="ALWAYS">
                                             <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                                             </columnResizePolicy>
                                             <columns>
-                                                <TableColumn fx:id="colTitle" text="TITRE" />
-                                                <TableColumn fx:id="colViews" text="VUES" />
-                                                <TableColumn fx:id="colStatus" text="STATUT" />
-                                                <TableColumn fx:id="colGenre" text="GENRE" />
+                                                <TableColumn fx:id="colTitle"  text="TITRE"    prefWidth="200"/>
+                                                <TableColumn fx:id="colViews"  text="VUES"     prefWidth="80"/>
+                                                <TableColumn fx:id="colStatus" text="STATUT"   prefWidth="80"/>
+                                                <TableColumn fx:id="colGenre"  text="TYPE"     prefWidth="80"/>
                                             </columns>
                                         </TableView>
                                     </children>
                                 </VBox>
 
-                                <!-- Mini cartes -->
-                                <VBox prefHeight="277.0" prefWidth="346.0" spacing="16.0" GridPane.columnIndex="1">
+                                <!-- Mini cartes actions rapides -->
+                                <VBox spacing="16" GridPane.columnIndex="1">
                                     <children>
-                                        <VBox prefHeight="279.0" prefWidth="363.0" spacing="10.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #2e2e2e; -fx-border-radius: 10; -fx-background-radius: 10;">
-                                            <padding><Insets bottom="18.0" left="20.0" right="20.0" top="18.0" /></padding>
+
+                                        <!-- Carte nouveaux abonnés -->
+                                        <VBox spacing="10"
+                                              style="-fx-background-color:#1e1e1e;-fx-border-color:#2e2e2e;-fx-border-radius:10;-fx-background-radius:10;">
+                                            <padding><Insets bottom="18" left="20" right="20" top="18"/></padding>
                                             <children>
                                                 <HBox alignment="CENTER_LEFT">
                                                     <children>
-                                                        <VBox spacing="2.0">
+                                                        <VBox spacing="2">
                                                             <children>
-                                                                <Label text="Nouveaux Abonnés" textFill="WHITE"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                                                <Label text="7 derniers jours" textFill="#555555"><font><Font size="11.0" /></font></Label>
+                                                                <Label text="Nouveaux Abonnés" textFill="WHITE">
+                                                                    <font><Font name="System Bold" size="13"/></font>
+                                                                </Label>
+                                                                <Label text="Total inscrits" textFill="#555555">
+                                                                    <font><Font size="11"/></font>
+                                                                </Label>
                                                             </children>
                                                         </VBox>
-                                                        <Region HBox.hgrow="ALWAYS" />
-                                                        <Label text="•••" textFill="#555555"><font><Font size="16.0" /></font></Label>
+                                                        <Region HBox.hgrow="ALWAYS"/>
                                                     </children>
                                                 </HBox>
-                                                <Label fx:id="newSubscribersLabel" text="16" textFill="WHITE">
-                                                    <font><Font name="System Bold" size="36.0" /></font>
+                                                <Label fx:id="newSubscribersLabel" text="—" textFill="WHITE">
+                                                    <font><Font name="System Bold" size="36"/></font>
                                                 </Label>
                                                 <HBox alignment="CENTER_LEFT">
                                                     <children>
-                                                        <Label text="↑ 13.03%" textFill="#46d369"><font><Font name="System Bold" size="12.0" /></font></Label>
+                                                        <Label text="👥 utilisateurs enregistrés" textFill="#46d369">
+                                                            <font><Font name="System Bold" size="11"/></font>
+                                                        </Label>
                                                     </children>
                                                 </HBox>
                                             </children>
                                         </VBox>
+
+                                        <!-- Carte actions rapides -->
+                                        <VBox spacing="10"
+                                              style="-fx-background-color:#1e1e1e;-fx-border-color:#2e2e2e;-fx-border-radius:10;-fx-background-radius:10;">
+                                            <padding><Insets bottom="18" left="20" right="20" top="18"/></padding>
+                                            <children>
+                                                <Label text="Actions rapides" textFill="WHITE">
+                                                    <font><Font name="System Bold" size="13"/></font>
+                                                </Label>
+                                                <Button mnemonicParsing="false" onAction="#openAddFilm"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-background-color:#e50914;-fx-text-fill:white;-fx-cursor:hand;-fx-border-radius:8;-fx-background-radius:8;-fx-padding:9 0 9 0;"
+                                                        text="＋ Ajouter un Film">
+                                                    <font><Font name="System Bold" size="13"/></font>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onAction="#openAddSeries"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-background-color:#333;-fx-text-fill:white;-fx-cursor:hand;-fx-border-radius:8;-fx-background-radius:8;-fx-padding:9 0 9 0;"
+                                                        text="＋ Ajouter une Série">
+                                                    <font><Font name="System Bold" size="13"/></font>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onAction="#goToEpisodes"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-background-color:#252525;-fx-text-fill:#b3b3b3;-fx-cursor:hand;-fx-border-radius:8;-fx-background-radius:8;-fx-padding:9 0 9 0;-fx-border-color:#2e2e2e;"
+                                                        text="＋ Ajouter un Épisode">
+                                                    <font><Font name="System Bold" size="13"/></font>
+                                                </Button>
+                                            </children>
+                                        </VBox>
+
                                     </children>
                                 </VBox>
 

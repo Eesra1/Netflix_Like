@@ -4,15 +4,17 @@ public class WatchHistory {
     private int id;
     private int userId;
     private int episodeId;
+    private int filmId;
     private int progressSeconds;
     private boolean watched;
 
     public WatchHistory() {}
 
-    public WatchHistory(int id, int userId, int episodeId, int progressSeconds, boolean watched) {
+    public WatchHistory(int id, int userId, int episodeId, int filmId, int progressSeconds, boolean watched) {
         this.id = id;
         this.userId = userId;
         this.episodeId = episodeId;
+        this.filmId = filmId;
         this.progressSeconds = progressSeconds;
         this.watched = watched;
     }
@@ -25,6 +27,9 @@ public class WatchHistory {
 
     public int getEpisodeId() { return episodeId; }
     public void setEpisodeId(int episodeId) { this.episodeId = episodeId; }
+
+    public int getFilmId() { return filmId; }
+    public void setFilmId(int filmId) { this.filmId = filmId; }
 
     public int getProgressSeconds() { return progressSeconds; }
     public void setProgressSeconds(int progressSeconds) { this.progressSeconds = progressSeconds; }

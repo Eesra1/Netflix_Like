@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #141414;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jstream.controller.DashboardController">
+<BorderPane prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #141414;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jstream.controller.DashboardController">
 
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="70.0" spacing="20.0" style="-fx-background-color: rgba(20, 20, 20, 0.95); -fx-border-color: #333; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
@@ -30,16 +30,16 @@
 
                 <HBox alignment="CENTER_LEFT" spacing="20.0">
                     <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Accueil" textFill="WHITE">
+                        <Button mnemonicParsing="false" onMouseClicked="#showAccueil" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Accueil" textFill="WHITE">
                             <font><Font name="System Bold" size="14.0" /></font>
                         </Button>
-                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Séries" textFill="#b3b3b3">
+                        <Button mnemonicParsing="false" onMouseClicked="#showSeries" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Séries" textFill="#b3b3b3">
                             <font><Font name="System Bold" size="14.0" /></font>
                         </Button>
-                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Films" textFill="#b3b3b3">
+                        <Button mnemonicParsing="false" onMouseClicked="#showFilms" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Films" textFill="#b3b3b3">
                             <font><Font name="System Bold" size="14.0" /></font>
                         </Button>
-                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Ma Liste" textFill="#b3b3b3">
+                        <Button mnemonicParsing="false" onMouseClicked="#showMaListe" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Ma Liste" textFill="#b3b3b3">
                             <font><Font name="System Bold" size="14.0" /></font>
                         </Button>
                     </children>
@@ -52,7 +52,7 @@
 
                 <TextField fx:id="searchField" prefWidth="250.0" promptText="Titres, genres, années..." style="-fx-background-color: #333; -fx-text-fill: white;" />
 
-                <Button mnemonicParsing="false" onAction="#handleLogout" style="-fx-background-color: #e50914;" text="Déconnexion" textFill="WHITE">
+                <Button mnemonicParsing="false" onAction="#handleLogout" style="-fx-background-color: #e50914; -fx-cursor: hand;" text="Déconnexion" textFill="WHITE">
                     <font><Font name="System Bold" size="12.0" /></font>
                 </Button>
             </children>
@@ -60,18 +60,20 @@
     </top>
 
     <center>
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: #141414; -fx-border-color: #141414;" BorderPane.alignment="CENTER">
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="650.0" prefWidth="1030.0" style="-fx-background: #141414; -fx-border-color: #141414;" BorderPane.alignment="CENTER">
             <content>
                 <VBox spacing="40.0" style="-fx-background-color: #141414;">
                     <children>
 
-                        <StackPane alignment="BOTTOM_LEFT" prefHeight="450.0" prefWidth="1080.0">
+                        <StackPane fx:id="heroStackPane" alignment="BOTTOM_LEFT" prefHeight="450.0" prefWidth="1080.0">
                             <children>
+
                                 <ImageView fx:id="heroImageView" fitHeight="500.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
                                         <Image url="@../img/image.jpg.jpeg" />
                                     </image>
                                 </ImageView>
+
 
                                 <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="15.0" style="-fx-background-color: linear-gradient(to top, #141414, transparent); -fx-padding: 0 0 50 40;">
                                     <children>
@@ -87,12 +89,12 @@
                                         </Label>
                                         <HBox spacing="15.0">
                                             <children>
-                                                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: white;" text="▶ Lecture">
+                                                <Button mnemonicParsing="false" onAction="#openPlayer" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: white; -fx-cursor: hand;" text="▶ Lecture">
                                                     <font>
                                                         <Font name="System Bold" size="16.0" />
                                                     </font>
                                                 </Button>
-                                                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: rgba(109, 109, 110, 0.7);" text="ⓘ Plus d'infos" textFill="WHITE">
+                                                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: rgba(109, 109, 110, 0.7); -fx-cursor: hand;" text="ⓘ Plus d'infos" textFill="WHITE">
                                                     <font>
                                                         <Font name="System Bold" size="16.0" />
                                                     </font>
@@ -110,7 +112,7 @@
                             </padding>
                             <children>
 
-                                <VBox spacing="10.0">
+                                <VBox fx:id="myListSection" spacing="10.0">
                                     <children>
                                         <Label text="Ma Liste" textFill="WHITE">
                                             <font><Font name="System Bold" size="20.0" /></font>
@@ -123,7 +125,7 @@
                                     </children>
                                 </VBox>
 
-                                <VBox spacing="10.0">
+                                <VBox fx:id="moviesSection" spacing="10.0">
                                     <children>
                                         <Label text="Films d'Action" textFill="WHITE">
                                             <font><Font name="System Bold" size="20.0" /></font>
@@ -136,7 +138,7 @@
                                     </children>
                                 </VBox>
 
-                                <VBox spacing="10.0">
+                                <VBox fx:id="seriesSection" spacing="10.0">
                                     <children>
                                         <Label text="Séries Tendances" textFill="WHITE">
                                             <font><Font name="System Bold" size="20.0" /></font>

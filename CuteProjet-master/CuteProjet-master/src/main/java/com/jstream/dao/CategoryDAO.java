@@ -21,6 +21,14 @@ public class CategoryDAO {
         ps.executeUpdate();
     }
 
+    public void update(Category c) throws SQLException {
+        PreparedStatement ps = DatabaseConnection.getInstance().prepareStatement(
+                "UPDATE categories SET name=? WHERE id=?");
+        ps.setString(1, c.getName());
+        ps.setInt(2, c.getId());
+        ps.executeUpdate();
+    }
+
     public List<Category> findAll() throws SQLException {
         List<Category> list = new ArrayList<>();
         ResultSet rs = DatabaseConnection.getInstance().createStatement()

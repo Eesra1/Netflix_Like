@@ -11,12 +11,12 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="rootPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jstream.controller.PlayerController">
+<StackPane fx:id="rootPane" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jstream.controller.PlayerController">
     <children>
 
         <MediaView fx:id="mediaView" />
 
-        <StackPane alignment="TOP_LEFT">
+        <StackPane alignment="TOP_LEFT" pickOnBounds="false">
             <children>
                 <Button mnemonicParsing="false" onAction="#goBack" style="-fx-background-color: rgba(0,0,0,0.5); -fx-cursor: hand;" text="← Retour" textFill="WHITE">
                     <font><Font name="System Bold" size="18.0" /></font>
@@ -46,33 +46,37 @@
             </children>
         </VBox>
 
-        <VBox fx:id="controlsBox" alignment="BOTTOM_CENTER" style="-fx-background-color: linear-gradient(to top, black, transparent);">
+        <VBox fx:id="controlsBox" alignment="BOTTOM_CENTER" pickOnBounds="false">
             <children>
-                <Slider fx:id="progressSlider" style="-fx-cursor: hand;">
-                    <VBox.margin><Insets left="20.0" right="20.0" /></VBox.margin>
-                </Slider>
-
-                <HBox alignment="CENTER_LEFT" spacing="15.0">
-                    <padding><Insets bottom="20.0" left="20.0" right="20.0" top="10.0" /></padding>
+                <VBox style="-fx-background-color: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
                     <children>
-                        <Button fx:id="playPauseButton" mnemonicParsing="false" onAction="#togglePlayPause" style="-fx-background-color: transparent; -fx-cursor: hand;" text="⏸" textFill="WHITE">
-                            <font><Font size="24.0" /></font>
-                        </Button>
+                        <Slider fx:id="progressSlider" style="-fx-cursor: hand;">
+                            <VBox.margin><Insets left="20.0" right="20.0" top="20.0" /></VBox.margin>
+                        </Slider>
 
-                        <Label fx:id="timeLabel" text="00:00 / 00:00" textFill="WHITE">
-                            <font><Font size="14.0" /></font>
-                        </Label>
+                        <HBox alignment="CENTER_LEFT" spacing="15.0">
+                            <padding><Insets bottom="20.0" left="20.0" right="20.0" top="10.0" /></padding>
+                            <children>
+                                <Button fx:id="playPauseButton" mnemonicParsing="false" onAction="#togglePlayPause" style="-fx-background-color: transparent; -fx-cursor: hand;" text="⏸" textFill="WHITE">
+                                    <font><Font size="24.0" /></font>
+                                </Button>
 
-                        <Label text="🔊" textFill="WHITE"><font><Font size="18.0" /></font></Label>
-                        <Slider fx:id="volumeSlider" max="1.0" prefWidth="100.0" value="0.5" />
+                                <Label fx:id="timeLabel" text="00:00 / 00:00" textFill="WHITE">
+                                    <font><Font size="14.0" /></font>
+                                </Label>
 
-                        <Region HBox.hgrow="ALWAYS" />
+                                <Label text="🔊" textFill="WHITE"><font><Font size="18.0" /></font></Label>
+                                <Slider fx:id="volumeSlider" max="1.0" prefWidth="100.0" value="0.5" />
 
-                        <Button mnemonicParsing="false" onAction="#toggleFullScreen" style="-fx-background-color: transparent; -fx-cursor: hand;" text="⛶" textFill="WHITE">
-                            <font><Font size="24.0" /></font>
-                        </Button>
+                                <Region HBox.hgrow="ALWAYS" />
+
+                                <Button mnemonicParsing="false" onAction="#toggleFullScreen" style="-fx-background-color: transparent; -fx-cursor: hand;" text="⛶" textFill="WHITE">
+                                    <font><Font size="24.0" /></font>
+                                </Button>
+                            </children>
+                        </HBox>
                     </children>
-                </HBox>
+                </VBox>
             </children>
         </VBox>
 

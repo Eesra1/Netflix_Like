@@ -32,4 +32,13 @@ public class SeasonDAO {
             list.add(new Season(rs.getInt("id"), rs.getInt("season_number"), rs.getInt("series_id")));
         return list;
     }
+
+    public List<Season> findAll() throws SQLException {
+        List<Season> list = new ArrayList<>();
+        ResultSet rs = DatabaseConnection.getInstance().createStatement()
+                .executeQuery("SELECT * FROM seasons");
+        while (rs.next())
+            list.add(new Season(rs.getInt("id"), rs.getInt("season_number"), rs.getInt("series_id")));
+        return list;
+    }
 }

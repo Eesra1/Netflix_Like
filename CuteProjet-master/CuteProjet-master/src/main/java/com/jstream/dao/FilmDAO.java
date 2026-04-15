@@ -29,7 +29,7 @@ public class FilmDAO {
 
     public void update(Film f) throws SQLException {
         PreparedStatement ps = DatabaseConnection.getInstance().prepareStatement(
-                "UPDATE films SET title=?, synopsis=?, cast=?, releaseDate=?, videoUrl=?, videoUrl=?, videoUrl=? WHERE id=?");
+                "UPDATE films SET title=?, synopsis=?, cast=?, releaseDate=?, videoUrl=?, coverUrl=?, categoryId=? WHERE id=?");
         ps.setString(1, f.getTitle());
         ps.setString(2, f.getSynopsis());
         ps.setString(3, f.getCast());

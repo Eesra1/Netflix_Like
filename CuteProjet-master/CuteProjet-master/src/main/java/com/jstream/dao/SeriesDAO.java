@@ -25,6 +25,18 @@ public class SeriesDAO {
         ps.executeUpdate();
     }
 
+    public void update(Series s) throws SQLException {
+        PreparedStatement ps = DatabaseConnection.getInstance().prepareStatement(
+                "UPDATE series SET title=?, synopsis=?, cast=?, category_id=?, cover_url=? WHERE id=?");
+        ps.setString(1, s.getTitle());
+        ps.setString(2, s.getSynopsis());
+        ps.setString(3, s.getCast());
+        ps.setInt(4, s.getCategoryId());
+        ps.setString(5, s.getCoverUrl());
+        ps.setInt(6, s.getId());
+        ps.executeUpdate();
+    }
+
     public List<Series> findAll() throws SQLException {
         List<Series> list = new ArrayList<>();
         ResultSet rs = DatabaseConnection.getInstance().createStatement()

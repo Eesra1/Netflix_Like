@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginController {
+public class LoginAdminController {
 
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
@@ -34,7 +34,7 @@ public class LoginController {
             if (loggedInUser != null) { //verification des identifiant
                 SessionManager.setCurrentUser(loggedInUser);
                 System.out.println("Connexion réussie pour : " + email);
-                String fxmlACharger = SessionManager.isAdmin() ? "/fxml/Dashboard.fxml" : "/fxml/Dashboard.fxml";
+                String fxmlACharger = SessionManager.isAdmin() ? "/fxml/Admin.fxml" : "/fxml/Admin.fxml";
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlACharger));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -51,25 +51,13 @@ public class LoginController {
     }
 
     @FXML
-    void goToRegister(ActionEvent event) {
+    void goToUserLogin(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/SignUp.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (IOException e) {
-            System.err.println("Erreur vers SignUp : " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void goToLoginAdmin(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoginAdmin.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            System.err.println("Erreur vers Login Admin : " + e.getMessage());
+            System.err.println("Erreur vers Login : " + e.getMessage());
             e.printStackTrace();
         }
     }

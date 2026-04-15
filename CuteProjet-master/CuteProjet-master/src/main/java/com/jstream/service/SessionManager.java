@@ -1,10 +1,13 @@
 package com.jstream.service;
 
+import com.jstream.model.Admin;
 import com.jstream.model.User;
 
 public class SessionManager {
 
     private static User currentUser;
+    private static Admin currentAdmin;
+
 
     public static void setCurrentUser(User u) {
         currentUser = u;
