@@ -13,7 +13,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         // 1. Afficher la première interface (Admin.fxml) dans la fenêtre principale
-        loadAndShowWindow("/fxml/Admin.fxml", "JStream - Dashboard Admin", primaryStage);
+        loadAndShowWindow("/fxml/Admin.fxml", "Movix - Dashboard Admin", primaryStage);
 
 
     }

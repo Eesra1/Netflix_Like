@@ -22,7 +22,7 @@
                 <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
             </padding>
             <children>
-                <Label text="JSTREAM" textFill="#e50914">
+                <Label text="Movix" textFill="#e50914">
                     <font>
                         <Font name="System Bold" size="28.0" />
                     </font>
@@ -74,7 +74,6 @@
                                     </image>
                                 </ImageView>
 
-
                                 <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="15.0" style="-fx-background-color: linear-gradient(to top, #141414, transparent); -fx-padding: 0 0 50 40;">
                                     <children>
                                         <Label fx:id="heroTitleLabel" text="TITRE DU FILM" textFill="WHITE">
@@ -125,9 +124,22 @@
                                     </children>
                                 </VBox>
 
-                                <VBox fx:id="moviesSection" spacing="10.0">
+                                <VBox fx:id="seriesSection" spacing="10.0">
                                     <children>
-                                        <Label text="Films d'Action" textFill="WHITE">
+                                        <Label text="Séries Tendances" textFill="WHITE">
+                                            <font><Font name="System Bold" size="20.0" /></font>
+                                        </Label>
+                                        <ScrollPane hbarPolicy="NEVER" style="-fx-background: #141414; -fx-border-color: #141414;" vbarPolicy="NEVER">
+                                            <content>
+                                                <HBox fx:id="trendingSeriesBox" spacing="15.0" />
+                                            </content>
+                                        </ScrollPane>
+                                    </children>
+                                </VBox>
+
+                                <VBox fx:id="actionSection" spacing="10.0">
+                                    <children>
+                                        <Label text="Action" textFill="WHITE">
                                             <font><Font name="System Bold" size="20.0" /></font>
                                         </Label>
                                         <ScrollPane hbarPolicy="NEVER" style="-fx-background: #141414; -fx-border-color: #141414;" vbarPolicy="NEVER">
@@ -138,14 +150,53 @@
                                     </children>
                                 </VBox>
 
-                                <VBox fx:id="seriesSection" spacing="10.0">
+                                <VBox fx:id="comedieSection" spacing="10.0">
                                     <children>
-                                        <Label text="Séries Tendances" textFill="WHITE">
+                                        <Label text="Comédie" textFill="WHITE">
                                             <font><Font name="System Bold" size="20.0" /></font>
                                         </Label>
                                         <ScrollPane hbarPolicy="NEVER" style="-fx-background: #141414; -fx-border-color: #141414;" vbarPolicy="NEVER">
                                             <content>
-                                                <HBox fx:id="trendingSeriesBox" spacing="15.0" />
+                                                <HBox fx:id="comedieBox" spacing="15.0" />
+                                            </content>
+                                        </ScrollPane>
+                                    </children>
+                                </VBox>
+
+                                <VBox fx:id="sfSection" spacing="10.0">
+                                    <children>
+                                        <Label text="Science-Fiction" textFill="WHITE">
+                                            <font><Font name="System Bold" size="20.0" /></font>
+                                        </Label>
+                                        <ScrollPane hbarPolicy="NEVER" style="-fx-background: #141414; -fx-border-color: #141414;" vbarPolicy="NEVER">
+                                            <content>
+                                                <HBox fx:id="scienceFictionBox" spacing="15.0" />
+                                            </content>
+                                        </ScrollPane>
+                                    </children>
+                                </VBox>
+
+                                <VBox fx:id="drameSection" spacing="10.0">
+                                    <children>
+                                        <Label text="Drame" textFill="WHITE">
+                                            <font><Font name="System Bold" size="20.0" /></font>
+                                        </Label>
+                                        <ScrollPane hbarPolicy="NEVER" style="-fx-background: #141414; -fx-border-color: #141414;" vbarPolicy="NEVER">
+                                            <content>
+                                                <HBox fx:id="drameBox" spacing="15.0" />
+                                            </content>
+                                        </ScrollPane>
+                                    </children>
+                                </VBox>
+
+                                <VBox fx:id="horreurSection" spacing="10.0">
+                                    <children>
+                                        <Label text="Horreur" textFill="WHITE">
+                                            <font><Font name="System Bold" size="20.0" /></font>
+                                        </Label>
+                                        <ScrollPane hbarPolicy="NEVER" style="-fx-background: #141414; -fx-border-color: #141414;" vbarPolicy="NEVER">
+                                            <content>
+                                                <HBox fx:id="horreurBox" spacing="15.0" />
                                             </content>
                                         </ScrollPane>
                                     </children>

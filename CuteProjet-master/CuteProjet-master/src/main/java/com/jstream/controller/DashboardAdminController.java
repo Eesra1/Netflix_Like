@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -41,9 +43,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.ArrayList;
-
-//import static com.jstream.service.AdminService.addFilm;
 
 
 public class DashboardAdminController implements Initializable {
@@ -121,6 +120,7 @@ public class DashboardAdminController implements Initializable {
     // Data lists for lookups
     private List<com.jstream.model.Category> cachedCategories = new java.util.ArrayList<>();
     private List<Series> cachedSeries = new java.util.ArrayList<>();
+    private List<Season> cachedSeasons = new java.util.ArrayList<>();
     // ─── Admin dashboard ─────────────────────────────────────────────────
     @FXML private Label totalViewsLabel;
     @FXML private Label totalSubscribersLabel;
@@ -374,9 +374,9 @@ public class DashboardAdminController implements Initializable {
                         for(Series s : cachedSeries) {
                             if(s.getTitle().equals(newVal)) {
                                 try {
-                                    List<Season> seasons = adminService.getSeasonsBySeries(s.getId());
+                                    cachedSeasons = adminService.getSeasonsBySeries(s.getId());
                                     ObservableList<String> seasonOptions = FXCollections.observableArrayList();
-                                    for(Season se : seasons) seasonOptions.add("Saison " + se.getSeasonNumber());
+                                    for(Season se : cachedSeasons) seasonOptions.add("Saison " + se.getSeasonNumber() + " (ID: " + se.getId() + ")");
                                     seasonComboBox.setItems(seasonOptions);
                                 } catch(Exception e){}
                                 break;
@@ -404,34 +404,115 @@ public class DashboardAdminController implements Initializable {
         List<Series> filteredSeries = allDashboardSeries;
 
         if (query != null && !query.isEmpty()) {
+            String q = query.toLowerCase();
+
             filteredFilms = allDashboardFilms.stream()
-                .filter(f -> f.getTitle() != null && f.getTitle().toLowerCase().contains(query))
-                .collect(Collectors.toList());
+                    .filter(f -> f.getTitle() != null && f.getTitle().toLowerCase().contains(q))
+                    .collect(Collectors.toList());
 
             filteredSeries = allDashboardSeries.stream()
-                .filter(s -> s.getTitle() != null && s.getTitle().toLowerCase().contains(query))
-                .collect(Collectors.toList());
+                    .filter(s -> s.getTitle() != null && s.getTitle().toLowerCase().contains(q))
+                    .collect(Collectors.toList());
         }
 
+        // ================= FILMS =================
         if (myListBox != null) {
             myListBox.getChildren().clear();
-            for (Film f : filteredFilms) myListBox.getChildren().add(createCard(f.getTitle(), "FILM", f.getCoverUrl()));
-            for (Series s : filteredSeries) myListBox.getChildren().add(createCard(s.getTitle(), "SÉRIE", s.getCoverUrl()));
+
+            for (Film f : filteredFilms) {
+                final Film filmRef = f;
+
+                StackPane card = createCard(f.getTitle(), "FILM", f.getCoverUrl());
+
+                card.setOnMouseClicked(event -> {
+                    DetailsController.showFilm(filmRef.getId(), filmRef.getTitle());
+
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Details.fxml"));
+                        Parent root = loader.load();
+                        Stage stage = (Stage) card.getScene().getWindow();
+                        stage.setScene(new Scene(root));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+                myListBox.getChildren().add(card);
+            }
+
+            for (Series s : filteredSeries) {
+                final Series seriesRef = s;
+
+                StackPane card = createCard(s.getTitle(), "SÉRIE", s.getCoverUrl());
+
+                card.setOnMouseClicked(event -> {
+                    DetailsController.showSeries(seriesRef.getId(), seriesRef.getTitle());
+
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Details.fxml"));
+                        Parent root = loader.load();
+                        Stage stage = (Stage) card.getScene().getWindow();
+                        stage.setScene(new Scene(root));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+                myListBox.getChildren().add(card);
+            }
         }
 
+        // ================= ACTION MOVIES =================
         if (actionMoviesBox != null) {
             actionMoviesBox.getChildren().clear();
+
             for (Film f : filteredFilms) {
-                if (f.getCategoryId() == 1 || f.getCategoryId() == 2) { 
-                    actionMoviesBox.getChildren().add(createCard(f.getTitle(), "FILM", f.getCoverUrl()));
+                if (f.getCategoryId() == 1 || f.getCategoryId() == 2) {
+                    final Film filmRef = f;
+
+                    StackPane card = createCard(f.getTitle(), "FILM", f.getCoverUrl());
+
+                    card.setOnMouseClicked(event -> {
+                        DetailsController.showFilm(filmRef.getId(), filmRef.getTitle());
+
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Details.fxml"));
+                            Parent root = loader.load();
+                            Stage stage = (Stage) card.getScene().getWindow();
+                            stage.setScene(new Scene(root));
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+
+                    actionMoviesBox.getChildren().add(card);
                 }
             }
         }
 
+        // ================= SERIES =================
         if (trendingSeriesBox != null) {
             trendingSeriesBox.getChildren().clear();
+
             for (Series s : filteredSeries) {
-                trendingSeriesBox.getChildren().add(createCard(s.getTitle(), "SÉRIE", s.getCoverUrl()));
+                final Series seriesRef = s;
+
+                StackPane card = createCard(s.getTitle(), "SÉRIE", s.getCoverUrl());
+
+                card.setOnMouseClicked(event -> {
+                    DetailsController.showSeries(seriesRef.getId(), seriesRef.getTitle());
+
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Details.fxml"));
+                        Parent root = loader.load();
+                        Stage stage = (Stage) card.getScene().getWindow();
+                        stage.setScene(new Scene(root));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+                trendingSeriesBox.getChildren().add(card);
             }
         }
     }
@@ -455,28 +536,19 @@ public class DashboardAdminController implements Initializable {
         String badgeColor = type.equals("SÉRIE") ? "#e50914" : "#333333";
         badge.setStyle("-fx-background-color: " + badgeColor + "; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 10px; -fx-padding: 3 6 3 6; -fx-background-radius: 3;");
 
-        javafx.scene.layout.StackPane stackPane = new javafx.scene.layout.StackPane();
+        StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(poster, badge);
         stackPane.setStyle("-fx-cursor: hand;");
-        javafx.scene.layout.StackPane.setAlignment(badge, javafx.geometry.Pos.TOP_LEFT);
-        javafx.scene.layout.StackPane.setMargin(badge, new javafx.geometry.Insets(5, 0, 0, 5));
+
+        StackPane.setAlignment(badge, Pos.TOP_LEFT);
+        StackPane.setMargin(badge, new Insets(5, 0, 0, 5));
 
         Label titleLabel = new Label(title);
         titleLabel.setStyle("-fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-color: rgba(0,0,0,0.7); -fx-padding: 2;");
         titleLabel.setMaxWidth(135.0);
-        stackPane.getChildren().add(titleLabel);
-        javafx.scene.layout.StackPane.setAlignment(titleLabel, javafx.geometry.Pos.BOTTOM_CENTER);
 
-        stackPane.setOnMouseClicked(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Details.fxml"));
-                Parent root = loader.load();
-                Stage stage = (Stage) stackPane.getScene().getWindow();
-                stage.setScene(new Scene(root));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
+        stackPane.getChildren().add(titleLabel);
+        StackPane.setAlignment(titleLabel, Pos.BOTTOM_CENTER);
 
         return stackPane;
     }
@@ -870,7 +942,10 @@ public class DashboardAdminController implements Initializable {
 
             int seasonId = 1;
             if (seasonComboBox != null && seasonComboBox.getSelectionModel().getSelectedIndex() != -1) {
-                seasonId = seasonComboBox.getSelectionModel().getSelectedIndex() + 1;
+                int selectedIdx = seasonComboBox.getSelectionModel().getSelectedIndex();
+                if (selectedIdx >= 0 && selectedIdx < cachedSeasons.size()) {
+                    seasonId = cachedSeasons.get(selectedIdx).getId();
+                }
             }
             episode.setSeasonId(seasonId);
 
@@ -1285,6 +1360,19 @@ public class DashboardAdminController implements Initializable {
         public String getViews() { return views; }
         public String getStatus() { return status; }
         public String getGenre() { return genre; }
+    }
+    @FXML
+    private void goToComments(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CommentsAdmin.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Erreur: Impossible de charger CommentsAdmin.fxml");
+            e.printStackTrace();
+        }
     }
 
 

@@ -8,7 +8,7 @@ public class DatabaseConnection {
 
     private static Connection connexion;
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/jstream_db";
+    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3307/jstream_db?useSSL=false&serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASS = "";
 

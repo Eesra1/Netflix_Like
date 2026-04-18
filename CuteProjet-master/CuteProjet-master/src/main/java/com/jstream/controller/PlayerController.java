@@ -1,7 +1,7 @@
 package com.jstream.controller;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition; // N'oubliez pas cet import !
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +24,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences; // NOUVEL IMPORT
 
 public class PlayerController implements Initializable {
 
@@ -35,8 +36,6 @@ public class PlayerController implements Initializable {
     @FXML private Label timeLabel;
     @FXML private VBox bingeWatchingOverlay;
     @FXML private Label countdownLabel;
-
-    // NOUVEAU : On déclare la boîte qui contient les contrôles en bas
     @FXML private VBox controlsBox;
 
     private MediaPlayer mediaPlayer;
@@ -44,74 +43,112 @@ public class PlayerController implements Initializable {
     private boolean isFullScreen = false;
     private Timeline bingeTimer;
     private int countdownSeconds = 10;
-
-    // NOUVEAU : Le chronomètre pour cacher la barre
     private PauseTransition hideControlsTimer;
+
+    // --- VARIABLES POUR LA SAUVEGARDE DE LA POSITION ---
+    private String currentVideoPath;
+    private Preferences prefs = Preferences.userNodeForPackage(PlayerController.class);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // --- 1. INITIALISATION DE LA VIDÉO ---
-        String videoUrl = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
-        Media media = new Media(videoUrl);
-        mediaPlayer = new MediaPlayer(media);
-        mediaView.setMediaPlayer(mediaPlayer);
-
-        mediaPlayer.setOnReady(() -> {
-            progressSlider.setMax(mediaPlayer.getTotalDuration().toSeconds());
-            mediaPlayer.play();
-        });
-
-        mediaPlayer.volumeProperty().bind(volumeSlider.valueProperty());
-        mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
-            progressSlider.setValue(newValue.toSeconds());
-            updateTime(newValue, mediaPlayer.getTotalDuration());
-        });
-
-        progressSlider.setOnMousePressed(e -> mediaPlayer.seek(Duration.seconds(progressSlider.getValue())));
-        progressSlider.setOnMouseDragged(e -> mediaPlayer.seek(Duration.seconds(progressSlider.getValue())));
-
-        // --- 2. GESTION DU BINGE WATCHING (Fin de vidéo) ---
-        mediaPlayer.setOnEndOfMedia(() -> {
-            bingeWatchingOverlay.setVisible(true);
-            countdownSeconds = 10;
-            countdownLabel.setText(String.valueOf(countdownSeconds));
-            bingeTimer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-                countdownSeconds--;
-                countdownLabel.setText(String.valueOf(countdownSeconds));
-
-                if (countdownSeconds <= 0) {
-                    bingeTimer.stop();
-                    playNextEpisode(null);
-                }
-            }));
-            bingeTimer.setCycleCount(Timeline.INDEFINITE);
-            bingeTimer.play();
-        });
-
-        // Redimensionnement de la vidéo
+        // --- Redimensionnement de la vidéo ---
         mediaView.fitWidthProperty().bind(rootPane.widthProperty());
         mediaView.fitHeightProperty().bind(rootPane.heightProperty());
 
-        // --- 3. AUTO-HIDE DES CONTRÔLES (La magie opère ici) ---
+        // --- AUTO-HIDE DES CONTRÔLES ---
         if (controlsBox != null) {
-            // Création du chrono de 3 secondes
             hideControlsTimer = new PauseTransition(Duration.seconds(3));
-            // Que faire à la fin des 3 secondes ? Cacher la barre
             hideControlsTimer.setOnFinished(event -> controlsBox.setVisible(false));
-            // Si la souris bouge sur l'écran
+
             rootPane.setOnMouseMoved(event -> {
-                controlsBox.setVisible(true); // Afficher la barre
-                hideControlsTimer.playFromStart(); // Remettre le chrono à zéro
+                controlsBox.setVisible(true);
+                hideControlsTimer.playFromStart();
             });
-            // Si la souris sort complètement de la fenêtre
             rootPane.setOnMouseExited(event -> {
                 controlsBox.setVisible(false);
                 hideControlsTimer.stop();
             });
-            // On lance le chrono au démarrage
             hideControlsTimer.play();
         } else {
             System.out.println("⚠️ Attention : controlsBox n'est pas lié. Vérifiez l'ID dans Scene Builder.");
+        }
+    }
+
+    /**
+     * ✅ Méthode appelée par DetailsController pour injecter la vidéo sélectionnée
+     */
+    public void initVideo(String videoPath) {
+        // --- NOUVEAU : On garde en mémoire le chemin de la vidéo ---
+        this.currentVideoPath = videoPath;
+
+        try {
+            // Sécurité : rajouter le "/" s'il est manquant pour trouver dans le dossier resources
+            if (!videoPath.startsWith("/") && !videoPath.startsWith("http")) {
+                videoPath = "/" + videoPath;
+            }
+
+            String mediaUrlFinal;
+
+            // Permet de lire soit un lien internet (http), soit un fichier local (ex: /videos/inception.mp4)
+            if (videoPath.startsWith("http")) {
+                mediaUrlFinal = videoPath;
+            } else {
+                URL resourceUrl = getClass().getResource(videoPath);
+                if (resourceUrl == null) {
+                    System.out.println("❌ Erreur : La vidéo " + videoPath + " est introuvable dans src/main/resources !");
+                    return;
+                }
+                mediaUrlFinal = resourceUrl.toExternalForm();
+            }
+
+            // On lance la lecture avec le bon chemin
+            Media media = new Media(mediaUrlFinal);
+            mediaPlayer = new MediaPlayer(media);
+            mediaView.setMediaPlayer(mediaPlayer);
+
+            // Événements liés à la vidéo
+            mediaPlayer.setOnReady(() -> {
+                progressSlider.setMax(mediaPlayer.getTotalDuration().toSeconds());
+
+                // --- NOUVEAU : Récupérer et appliquer la position sauvegardée ---
+                double savedTime = prefs.getDouble(currentVideoPath, 0.0);
+                if (savedTime > 0) {
+                    mediaPlayer.seek(Duration.seconds(savedTime));
+                    System.out.println("Reprise de la vidéo à : " + savedTime + " secondes.");
+                }
+
+                mediaPlayer.play();
+            });
+
+            mediaPlayer.volumeProperty().bind(volumeSlider.valueProperty());
+            mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+                progressSlider.setValue(newValue.toSeconds());
+                updateTime(newValue, mediaPlayer.getTotalDuration());
+            });
+
+            progressSlider.setOnMousePressed(e -> mediaPlayer.seek(Duration.seconds(progressSlider.getValue())));
+            progressSlider.setOnMouseDragged(e -> mediaPlayer.seek(Duration.seconds(progressSlider.getValue())));
+
+            // Gestion du Binge Watching à la fin de la vidéo
+            mediaPlayer.setOnEndOfMedia(() -> {
+                bingeWatchingOverlay.setVisible(true);
+                countdownSeconds = 10;
+                countdownLabel.setText(String.valueOf(countdownSeconds));
+                bingeTimer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+                    countdownSeconds--;
+                    countdownLabel.setText(String.valueOf(countdownSeconds));
+
+                    if (countdownSeconds <= 0) {
+                        bingeTimer.stop();
+                        playNextEpisode(null);
+                    }
+                }));
+                bingeTimer.setCycleCount(Timeline.INDEFINITE);
+                bingeTimer.play();
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -125,6 +162,8 @@ public class PlayerController implements Initializable {
 
     @FXML
     private void togglePlayPause(ActionEvent event) {
+        if (mediaPlayer == null) return; // ✅ Sécurité si la vidéo ne s'est pas chargée
+
         if (isPlaying) {
             mediaPlayer.pause();
             playPauseButton.setText("▶");
@@ -145,6 +184,19 @@ public class PlayerController implements Initializable {
     @FXML
     private void goBack(ActionEvent event) {
         if (mediaPlayer != null) {
+            // --- NOUVEAU : Sauvegarder la position avant de fermer la vidéo ---
+            if (currentVideoPath != null) {
+                double currentTime = mediaPlayer.getCurrentTime().toSeconds();
+                double totalTime = mediaPlayer.getTotalDuration().toSeconds();
+
+                // Si la vidéo est à moins de 10 secondes de la fin, on considère qu'elle est terminée
+                if (totalTime - currentTime < 10) {
+                    prefs.putDouble(currentVideoPath, 0.0);
+                } else {
+                    prefs.putDouble(currentVideoPath, currentTime);
+                }
+            }
+
             mediaPlayer.stop();
         }
         try {
@@ -163,7 +215,7 @@ public class PlayerController implements Initializable {
         if (bingeTimer != null) bingeTimer.stop();
         bingeWatchingOverlay.setVisible(false);
         System.out.println("Lancement de l'épisode suivant !");
-        // Ici, vous ajouterez plus tard la logique pour charger la vidéo suivante
+        // Logique à ajouter plus tard
     }
 
     @FXML

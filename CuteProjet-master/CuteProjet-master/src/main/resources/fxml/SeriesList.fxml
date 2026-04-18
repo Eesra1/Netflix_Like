@@ -28,7 +28,7 @@
                 <HBox alignment="CENTER_LEFT" prefHeight="64.0" style="-fx-border-color: #2e2e2e; -fx-border-width: 0 0 1 0;">
                     <padding><Insets bottom="16.0" left="24.0" right="24.0" top="16.0" /></padding>
                     <children>
-                        <Label text="JSTREAM" textFill="#e50914">
+                        <Label text="Movix" textFill="#e50914">
                             <font><Font name="System Bold" size="26.0" /></font>
                         </Label>
                     </children>

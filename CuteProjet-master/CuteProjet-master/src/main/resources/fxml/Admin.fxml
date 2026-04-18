@@ -40,7 +40,7 @@
                       style="-fx-border-color:#2e2e2e;-fx-border-width:0 0 1 0;">
                     <padding><Insets bottom="16" left="24" right="24" top="16"/></padding>
                     <children>
-                        <Label text="JSTREAM" textFill="#e50914">
+                        <Label text="Movix" textFill="#e50914">
                             <font><Font name="System Bold" size="26"/></font>
                         </Label>
                     </children>
@@ -124,9 +124,19 @@
                     </children>
                 </HBox>
 
-                <Label style="-fx-padding:18 14 6 14;" text="PARAMÈTRES" textFill="#555555">
-                    <font><Font name="System Bold" size="10"/></font>
-                </Label>
+                <!-- Commentaires -->
+                <HBox alignment="CENTER_LEFT" prefHeight="42.0" spacing="10.0"
+                      style="-fx-background-color: transparent; -fx-cursor: hand;">
+                    <padding><Insets bottom="0.0" left="20.0" right="20.0" top="0.0" /></padding>
+                    <children>
+                        <Label prefWidth="20.0" text="💬" textFill="#b3b3b3"><font><Font size="13.0" /></font></Label>
+                        <Button mnemonicParsing="false" onAction="#goToComments"
+                                style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;"
+                                text="Commentaires" textFill="#b3b3b3">
+                            <font><Font size="13.0" /></font>
+                        </Button>
+                    </children>
+                </HBox>
 
 
 
