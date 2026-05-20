@@ -25,19 +25,18 @@ public class SignUpController {
             String name = nameField.getText();
             String email = emailField.getText();
             String password = passwordField.getText();
-            if (name.isEmpty() || email.isEmpty() || password.isEmpty()) { //verifier si les champs ne sont pas vide
-                System.out.println("⚠️ Veuillez remplir tous les champs !");
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                System.out.println("Veuillez remplir tous les champs !");
                 return;
             }
             boolean isRegistered = authService.register(name, email, password);
             if (isRegistered) {
-                System.out.println("✅ Compte créé avec succès pour : " + name);
-                handleLoginRedirect(event); //retourner directement vers la page de login
+                handleLoginRedirect(event);
             } else {
-                System.out.println("❌ Cet email est déjà utilisé !");
+                System.out.println("Cet email est déjà utilisé !");
             }
         } catch (Exception e) {
-            System.err.println("❌ Erreur lors de l'inscription : " + e.getMessage());
+            System.err.println("Erreur lors de l'inscription : " + e.getMessage());
             e.printStackTrace();
         }
     }

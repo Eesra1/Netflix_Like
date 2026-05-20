@@ -5,13 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * DAO Watchlist — gère l'ajout / suppression d'un film, d'une série
- * ou d'un épisode dans la liste personnelle d'un utilisateur.
- */
 public class WatchlistDAO {
-
-    // ── Films ────────────────────────────────────────────────────────────────
 
     public void addFilm(int userId, int filmId) throws SQLException {
         PreparedStatement ps = DatabaseConnection.getInstance().prepareStatement(
@@ -37,8 +31,6 @@ public class WatchlistDAO {
         return ps.executeQuery().next();
     }
 
-    // ── Séries ───────────────────────────────────────────────────────────────
-
     public void addSeries(int userId, int seriesId) throws SQLException {
         PreparedStatement ps = DatabaseConnection.getInstance().prepareStatement(
                 "INSERT IGNORE INTO watchlist (user_id, series_id) VALUES (?, ?)");
@@ -63,8 +55,6 @@ public class WatchlistDAO {
         return ps.executeQuery().next();
     }
 
-    // ── Épisodes ─────────────────────────────────────────────────────────────
-
     public void addEpisode(int userId, int episodeId) throws SQLException {
         PreparedStatement ps = DatabaseConnection.getInstance().prepareStatement(
                 "INSERT IGNORE INTO watchlist (user_id, episode_id) VALUES (?, ?)");
@@ -88,8 +78,6 @@ public class WatchlistDAO {
         ps.setInt(2, episodeId);
         return ps.executeQuery().next();
     }
-
-    // ── Liste complète d'un utilisateur ──────────────────────────────────────
 
     public List<Watchlist> findByUser(int userId) throws SQLException {
         List<Watchlist> list = new ArrayList<>();

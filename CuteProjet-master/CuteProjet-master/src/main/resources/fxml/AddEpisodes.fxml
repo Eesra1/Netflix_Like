@@ -57,9 +57,8 @@
         </HBox>
     </top>
 
-    <!-- ═══════════════════════════════════════════════
-         CENTER — FORMULAIRE
-    ═══════════════════════════════════════════════ -->
+    <!--
+         CENTER — FORMULAIRE  -->
     <center>
         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: #141414; -fx-border-color: #141414;">
             <content>

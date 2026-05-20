@@ -179,7 +179,7 @@
     </left>
 
     <!-- ═══════════════════════════════════════════════
-         TOP — HEADER BAR  (avec barre de recherche fonctionnelle)
+         TOP — HEADER BAR
     ═══════════════════════════════════════════════ -->
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="60" spacing="14"

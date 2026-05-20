@@ -9,8 +9,6 @@ import java.util.Map;
 
 public class SubscriptionDAO {
 
-    // ── Insertion ────────────────────────────────────────────────────────────
-
     public void add(Subscription s) throws SQLException {
         PreparedStatement ps = DatabaseConnection.getInstance().prepareStatement(
                 "INSERT INTO subscriptions (user_id, plan, start_date, end_date, is_active) VALUES (?, ?, ?, ?, ?)");
@@ -21,8 +19,6 @@ public class SubscriptionDAO {
         ps.setBoolean(5, s.isActive());
         ps.executeUpdate();
     }
-
-    // ── Modification ─────────────────────────────────────────────────────────
 
     public void update(Subscription s) throws SQLException {
         PreparedStatement ps = DatabaseConnection.getInstance().prepareStatement(
@@ -36,16 +32,12 @@ public class SubscriptionDAO {
         ps.executeUpdate();
     }
 
-    // ── Suppression ──────────────────────────────────────────────────────────
-
     public void delete(int id) throws SQLException {
         PreparedStatement ps = DatabaseConnection.getInstance().prepareStatement(
                 "DELETE FROM subscriptions WHERE id=?");
         ps.setInt(1, id);
         ps.executeUpdate();
     }
-
-    // ── Comptages ────────────────────────────────────────────────────────────
 
     public int countActiveSubscriptions() throws SQLException {
         ResultSet rs = DatabaseConnection.getInstance().createStatement()
@@ -72,14 +64,10 @@ public class SubscriptionDAO {
         return map;
     }
 
-    // ── Listes ───────────────────────────────────────────────────────────────
-
-    /** Utilisé par SubscriptionController (dashboard). */
     public List<Subscription> findAll(String filter) throws SQLException {
         return findAll(filter, null);
     }
 
-    /** Utilisé par AbonnesController — filtre combiné search + plan exact. */
     public List<Subscription> findAll(String search, String plan) throws SQLException {
         List<Subscription> list = new ArrayList<>();
 

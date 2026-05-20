@@ -26,7 +26,6 @@ public class Comment {
         this.createdAt = createdAt;
     }
 
-    // Constructeur rétrocompatible
     public Comment(int id, int userId, int filmId, String content, boolean flagged) {
         this(id, userId, filmId, 0, 0, content, flagged, null);
     }
@@ -55,7 +54,6 @@ public class Comment {
     public LocalDateTime getCreatedAt()          { return createdAt; }
     public void setCreatedAt(LocalDateTime v)    { this.createdAt = v; }
 
-    /** Retourne le type de contenu : "Film", "Série", "Épisode" ou "—" */
     public String getContentType() {
         if (filmId    > 0) return "Film";
         if (seriesId  > 0) return "Série";
@@ -63,7 +61,6 @@ public class Comment {
         return "—";
     }
 
-    /** Retourne l'ID du contenu associé */
     public int getContentId() {
         if (filmId    > 0) return filmId;
         if (seriesId  > 0) return seriesId;

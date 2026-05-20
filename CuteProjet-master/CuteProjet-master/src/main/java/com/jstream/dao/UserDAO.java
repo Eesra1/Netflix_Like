@@ -8,7 +8,6 @@ import java.util.List;
 
 public class UserDAO {
 
-    // ── Helpers ──────────────────────────────────────────────────────────────
     private LocalDateTime toLocalDateTime(Timestamp ts) {
         return ts != null ? ts.toLocalDateTime() : null;
     }
@@ -27,7 +26,6 @@ public class UserDAO {
         );
     }
 
-    // ── CRUD ─────────────────────────────────────────────────────────────────
     public void add(User u) throws SQLException {
         LocalDateTime now = LocalDateTime.now();
         PreparedStatement ps = DatabaseConnection.getInstance().prepareStatement(
@@ -68,12 +66,7 @@ public class UserDAO {
         return list;
     }
 
-    // ── Abonnements ──────────────────────────────────────────────────────────
-
-    /** Renouveler l'abonnement d'un utilisateur pour 30 jours supplémentaires. */
     public void renewSubscription(int userId) throws SQLException {
-        // Si l'abonnement est encore actif, on ajoute 30j à sub_end
-        // Sinon, on repart de maintenant
         PreparedStatement ps = DatabaseConnection.getInstance().prepareStatement(
                 "UPDATE users " +
                         "SET sub_start  = CASE WHEN sub_end >= NOW() THEN sub_start ELSE NOW() END, " +
@@ -84,11 +77,9 @@ public class UserDAO {
         ps.executeUpdate();
     }
 
-    /** Synchroniser le statut EXPIRED pour tous les abonnements échus. */
     public void syncExpiredStatuses() throws SQLException {
         DatabaseConnection.getInstance().createStatement().executeUpdate(
                 "UPDATE users SET sub_status = 'EXPIRED' " +
                         "WHERE sub_end < NOW() AND sub_status = 'ACTIVE'");
     }
 }
- 

@@ -46,10 +46,18 @@ public class FilmDAO {
                 "SELECT * FROM films WHERE id=?");
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
-        if (rs.next())
-            return new Film(rs.getInt("id"), rs.getString("title"), rs.getString("synopsis"),
-                    rs.getString("cast"), rs.getString("release_date"), rs.getString("video_url"),
-                    rs.getString("cover_url"), rs.getInt("category_id"));
+        if (rs.next()) {
+            return new Film(
+                    rs.getInt("id"),
+                    rs.getString("title"),
+                    rs.getString("synopsis"),
+                    rs.getString("cast"),
+                    rs.getString("releaseDate"),
+                    rs.getString("videoUrl"),
+                    rs.getString("coverUrl"),
+                    rs.getInt("categoryId")
+            );
+        }
         return null;
     }
 
@@ -58,22 +66,36 @@ public class FilmDAO {
         ResultSet rs = DatabaseConnection.getInstance().createStatement()
                 .executeQuery("SELECT * FROM films");
         while (rs.next())
-            list.add(new Film(rs.getInt("id"), rs.getString("title"), rs.getString("synopsis"),
-                    rs.getString("cast"), rs.getString("releaseDate"), rs.getString("videoUrl"),
-                    rs.getString("coverUrl"), rs.getInt("categoryId")));
+            list.add(new Film(
+                    rs.getInt("id"),
+                    rs.getString("title"),
+                    rs.getString("synopsis"),
+                    rs.getString("cast"),
+                    rs.getString("releaseDate"),
+                    rs.getString("videoUrl"),
+                    rs.getString("coverUrl"),
+                    rs.getInt("categoryId")
+            ));
         return list;
     }
 
     public List<Film> findByCategory(int categoryId) throws SQLException {
         List<Film> list = new ArrayList<>();
         PreparedStatement ps = DatabaseConnection.getInstance().prepareStatement(
-                "SELECT * FROM films WHERE category_id=?");
+                "SELECT * FROM films WHERE categoryId=?");
         ps.setInt(1, categoryId);
         ResultSet rs = ps.executeQuery();
         while (rs.next())
-            list.add(new Film(rs.getInt("id"), rs.getString("title"), rs.getString("synopsis"),
-                    rs.getString("cast"), rs.getString("release_date"), rs.getString("video_url"),
-                    rs.getString("cover_url"), rs.getInt("category_id")));
+            list.add(new Film(
+                    rs.getInt("id"),
+                    rs.getString("title"),
+                    rs.getString("synopsis"),
+                    rs.getString("cast"),
+                    rs.getString("releaseDate"),
+                    rs.getString("videoUrl"),
+                    rs.getString("coverUrl"),
+                    rs.getInt("categoryId")
+            ));
         return list;
     }
 }

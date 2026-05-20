@@ -25,44 +25,35 @@ import java.util.ResourceBundle;
 
 public class SubscriberController implements Initializable {
 
-    // ── Header / Search ──────────────────────────────────────────────────────
     @FXML private TextField searchField;
     @FXML private Label totalCountLabel;
     @FXML private Label activeCountLabel;
     @FXML private Label expiredCountLabel;
 
-    // ── Table ────────────────────────────────────────────────────────────────
-    @FXML private TableView<User>              subscriberTable;
-    @FXML private TableColumn<User, String>    colName;
-    @FXML private TableColumn<User, String>    colEmail;
-    @FXML private TableColumn<User, String>    colRole;
-    @FXML private TableColumn<User, String>    colStart;
-    @FXML private TableColumn<User, String>    colEnd;
-    @FXML private TableColumn<User, String>    colStatus;
-    @FXML private TableColumn<User, Void>      colActions;
+    @FXML private TableView<User> subscriberTable;
+    @FXML private TableColumn<User, String> colName;
+    @FXML private TableColumn<User, String> colEmail;
+    @FXML private TableColumn<User, String> colRole;
+    @FXML private TableColumn<User, String> colStart;
+    @FXML private TableColumn<User, String> colEnd;
+    @FXML private TableColumn<User, String> colStatus;
+    @FXML private TableColumn<User, Void> colActions;
 
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
     private ObservableList<User> allUsers = FXCollections.observableArrayList();
-    private FilteredList<User>   filtered;
+    private FilteredList<User> filtered;
     private final UserDAO userDAO = new UserDAO();
 
-    // ── Initialise ───────────────────────────────────────────────────────────
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Sync expired statuses on load
         try { userDAO.syncExpiredStatuses(); } catch (Exception ignored) {}
-
         setupColumns();
         loadData();
-
-        // Live search
         if (searchField != null) {
             searchField.textProperty().addListener((obs, o, n) -> applyFilter(n));
         }
     }
 
-    // ── Column setup ─────────────────────────────────────────────────────────
     private void setupColumns() {
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -80,7 +71,6 @@ public class SubscriberController implements Initializable {
                 new SimpleStringProperty(c.getValue().getSubStatus() != null
                         ? c.getValue().getSubStatus() : "INACTIVE"));
 
-        // Colored badge for status
         colStatus.setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(String status, boolean empty) {
@@ -88,9 +78,9 @@ public class SubscriberController implements Initializable {
                 if (empty || status == null) { setGraphic(null); setText(null); return; }
                 Label badge = new Label(status);
                 String color = switch (status) {
-                    case "ACTIVE"   -> "#46d369";
-                    case "EXPIRED"  -> "#e50914";
-                    default         -> "#888888";
+                    case "ACTIVE" -> "#46d369";
+                    case "EXPIRED" -> "#e50914";
+                    default -> "#888888";
                 };
                 badge.setStyle("-fx-background-color: " + color + "22; " +
                         "-fx-text-fill: " + color + "; " +
@@ -101,7 +91,6 @@ public class SubscriberController implements Initializable {
             }
         });
 
-        // Actions column — Renouveler button
         colActions.setCellFactory(buildActionCellFactory());
     }
 
@@ -132,7 +121,6 @@ public class SubscriberController implements Initializable {
         };
     }
 
-    // ── Data loading ─────────────────────────────────────────────────────────
     private void loadData() {
         try {
             allUsers.setAll(userDAO.findAll());
@@ -149,7 +137,7 @@ public class SubscriberController implements Initializable {
         String q = query == null ? "" : query.trim().toLowerCase();
         filtered.setPredicate(u -> {
             if (q.isEmpty()) return true;
-            return (u.getName()  != null && u.getName().toLowerCase().contains(q))
+            return (u.getName() != null && u.getName().toLowerCase().contains(q))
                     || (u.getEmail() != null && u.getEmail().toLowerCase().contains(q))
                     || (u.getSubStatus() != null && u.getSubStatus().toLowerCase().contains(q));
         });
@@ -157,17 +145,16 @@ public class SubscriberController implements Initializable {
     }
 
     private void updateCountLabels() {
-        if (totalCountLabel   != null) totalCountLabel.setText(String.valueOf(allUsers.size()));
-        if (activeCountLabel  != null) activeCountLabel.setText(String.valueOf(
+        if (totalCountLabel != null) totalCountLabel.setText(String.valueOf(allUsers.size()));
+        if (activeCountLabel != null) activeCountLabel.setText(String.valueOf(
                 allUsers.stream().filter(u -> "ACTIVE".equals(u.getSubStatus())).count()));
         if (expiredCountLabel != null) expiredCountLabel.setText(String.valueOf(
                 allUsers.stream().filter(u -> "EXPIRED".equals(u.getSubStatus())).count()));
     }
 
-    // ── Navigation ────────────────────────────────────────────────────────────
-    @FXML private void goBack(ActionEvent event)       { navigate("/fxml/Admin.fxml", event); }
+    @FXML private void goBack(ActionEvent event) { navigate("/fxml/Admin.fxml", event); }
     @FXML private void goToFilmList(ActionEvent event) { navigate("/fxml/FilmList.fxml", event); }
-    @FXML private void goToSeries(ActionEvent event)   { navigate("/fxml/SeriesList.fxml", event); }
+    @FXML private void goToSeries(ActionEvent event) { navigate("/fxml/SeriesList.fxml", event); }
     @FXML private void goToEpisodes(ActionEvent event) { navigate("/fxml/AddEpisodes.fxml", event); }
     @FXML private void handleLogout(ActionEvent event) {
         com.jstream.service.SessionManager.logout();
@@ -183,7 +170,4 @@ public class SubscriberController implements Initializable {
             stage.show();
         } catch (IOException e) { e.printStackTrace(); }
     }
-
-
 }
-

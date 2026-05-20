@@ -26,26 +26,24 @@ public class LoginAdminController {
         try {
             String email = emailField.getText();
             String password = passwordField.getText();
-            if (email.isEmpty() || password.isEmpty()) { // test pour eviter les champs vide
+            if (email.isEmpty() || password.isEmpty()) {
                 System.out.println("Veuillez remplir tous les champs !");
                 return;
             }
             User loggedInUser = authService.login(email, password);
-            if (loggedInUser != null) { //verification des identifiant
+            if (loggedInUser != null) {
                 SessionManager.setCurrentUser(loggedInUser);
-                System.out.println("Connexion réussie pour : " + email);
-                String fxmlACharger = SessionManager.isAdmin() ? "/fxml/Admin.fxml" : "/fxml/Admin.fxml";
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlACharger));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Admin.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.centerOnScreen();
                 stage.show();
             } else {
-                System.out.println(" Identifiants incorrects !");
+                System.out.println("Identifiants incorrects !");
             }
         } catch (Exception e) {
-            System.err.println("Erreur lors de la connexion ou du chargement : " + e.getMessage());
+            System.err.println("Erreur lors de la connexion : " + e.getMessage());
             e.printStackTrace();
         }
     }

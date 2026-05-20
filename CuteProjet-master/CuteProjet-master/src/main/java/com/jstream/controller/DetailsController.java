@@ -1,28 +1,21 @@
 package com.jstream.controller;
 
-import com.jstream.dao.CommentDAO;
-import com.jstream.dao.WatchlistDAO;
-import com.jstream.service.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class DetailsController implements Initializable {
@@ -39,176 +32,86 @@ public class DetailsController implements Initializable {
     @FXML private TextArea commentTextArea;
     @FXML private VBox commentsContainer;
 
-    // ── Contexte du contenu affiché ──────────────────────────────────────────
-    /** Valeurs injectées depuis la page précédente (null = non renseigné). */
-    private static Integer currentFilmId    = null;
-    private static Integer currentSeriesId  = null;
-    private static Integer currentEpisodeId = null;
-    private static String  currentTitle     = "TITRE";
-    private static String  currentType      = "FILM"; // "FILM" | "SÉRIE" | "ÉPISODE"
+    private String currentMovieImagePath;
+    private static Integer currentFilmId = null;
+    private static Integer currentSeriesId = null;
+    private static String currentTitle = "Chargement...";
 
-    private final WatchlistDAO watchlistDAO = new WatchlistDAO();
-    private final CommentDAO   commentDAO   = new CommentDAO();
+    // ✅ NOUVEAU : Stocke le chemin de la vidéo à lancer
+    private String currentVideoPath;
 
-    private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
-    // ── Méthodes statiques pour injecter le contexte depuis d'autres contrôleurs ──
-    public static void showFilm(int filmId, String title) {
-        currentFilmId    = filmId;
-        currentSeriesId  = null;
-        currentEpisodeId = null;
-        currentTitle     = title;
-        currentType      = "FILM";
-    }
-
-    public static void showSeries(int seriesId, String title) {
-        currentFilmId    = null;
-        currentSeriesId  = seriesId;
-        currentEpisodeId = null;
-        currentTitle     = title;
-        currentType      = "SÉRIE";
-    }
-
-    public static void showEpisode(int episodeId, String title) {
-        currentFilmId    = null;
-        currentSeriesId  = null;
-        currentEpisodeId = episodeId;
-        currentTitle     = title;
-        currentType      = "ÉPISODE";
-    }
-
-    // ── Initialisation ───────────────────────────────────────────────────────
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ratingComboBox.setItems(FXCollections.observableArrayList(
-                "1 Étoile", "2 Étoiles", "3 Étoiles", "4 Étoiles", "5 Étoiles"));
-        seasonComboBox.setItems(FXCollections.observableArrayList("Saison 1", "Saison 2"));
-        seasonComboBox.getSelectionModel().selectFirst();
+        // 1. Initialisation des menus déroulants (ComboBox)
+        if (ratingComboBox != null) {
+            ratingComboBox.setItems(FXCollections.observableArrayList(
+                    "1 Étoile", "2 Étoiles", "3 Étoiles", "4 Étoiles", "5 Étoiles"
+            ));
+        }
 
-        // Affichage du titre
-        if (titleLabel != null) titleLabel.setText(currentTitle);
+        // 2. Affichage du titre envoyé par le Dashboard
+        if (titleLabel != null) {
+            titleLabel.setText(currentTitle);
+        }
 
-        // Mise à jour du bouton "Ma Liste"
-        refreshWatchlistButton();
+        // 3. Gestion de l'affichage (Série vs Film)
+        if (seriesSection != null) {
+            if (currentSeriesId != null) {
+                // C'est une série : on montre la section des épisodes
+                seriesSection.setVisible(true);
+                seriesSection.setManaged(true);
 
-        // Chargement des commentaires existants
-        loadComments();
-    }
-
-    // ── Watchlist : bouton ♥ ────────────────────────────────────────────────
-    private void refreshWatchlistButton() {
-        if (myListButton == null) return;
-        if (SessionManager.getCurrentUser() == null) return;
-
-        int userId = SessionManager.getCurrentUser().getId();
-        try {
-            boolean inList = false;
-            if (currentFilmId    != null) inList = watchlistDAO.isFilmInList(userId, currentFilmId);
-            else if (currentSeriesId  != null) inList = watchlistDAO.isSeriesInList(userId, currentSeriesId);
-            else if (currentEpisodeId != null) inList = watchlistDAO.isEpisodeInList(userId, currentEpisodeId);
-
-            if (inList) {
-                myListButton.setText("✔ Dans Ma Liste");
-                myListButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; " +
-                        "-fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;");
+                if (seasonComboBox != null) {
+                    seasonComboBox.setItems(FXCollections.observableArrayList("Saison 1", "Saison 2"));
+                    seasonComboBox.getSelectionModel().selectFirst();
+                }
+                if (episodesListView != null) {
+                    episodesListView.setItems(FXCollections.observableArrayList(
+                            "1. Le commencement (45 min)",
+                            "2. La trahison (50 min)",
+                            "3. Le dénouement (48 min)"
+                    ));
+                }
             } else {
-                myListButton.setText("+ Ma Liste");
-                myListButton.setStyle("-fx-background-color: rgba(109,109,110,0.7); -fx-text-fill: white; " +
-                        "-fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;");
+                // C'est un film : on cache toute la section Épisodes
+                seriesSection.setVisible(false);
+                seriesSection.setManaged(false);
+            }
+        }
+
+
+    }
+
+    /**
+     * ✅ MODIFIÉ : On ajoute "String videoPath" en paramètre pour recevoir la vidéo depuis le Dashboard.
+     */
+    public void initData(String imagePath, String videoPath, boolean isSerie) {
+        this.currentMovieImagePath = imagePath;
+        this.currentVideoPath = videoPath; // On sauvegarde la vidéo
+
+        // 1. Mettre à jour l'image de la bannière
+        try {
+            Image img = new Image(getClass().getResourceAsStream(imagePath));
+            if (!img.isError()) {
+                bannerImage.setImage(img);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Image non trouvée pour les détails : " + imagePath);
+        }
+
+        // 2. Si le film est déjà dans la liste, on met le bouton en vert tout de suite
+        if (DashboardController.mesFavoris.contains(currentMovieImagePath)) {
+            myListButton.setText("✔ Dans Ma Liste");
+            myListButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;");
+        }
+
+        // 3. Masquer ou afficher la section des épisodes selon si c'est une série ou non
+        if (seriesSection != null) {
+            seriesSection.setVisible(isSerie);
+            seriesSection.setManaged(isSerie); // retire l'espace vide laissé par la VBox cachée
         }
     }
 
-    @FXML
-    private void toggleMyList(ActionEvent event) {
-        if (SessionManager.getCurrentUser() == null) {
-            showInfo("Vous devez être connecté pour sauvegarder un contenu.");
-            return;
-        }
-        int userId = SessionManager.getCurrentUser().getId();
-        try {
-            if (currentFilmId != null) {
-                if (watchlistDAO.isFilmInList(userId, currentFilmId))
-                    watchlistDAO.removeFilm(userId, currentFilmId);
-                else
-                    watchlistDAO.addFilm(userId, currentFilmId);
-
-            } else if (currentSeriesId != null) {
-                if (watchlistDAO.isSeriesInList(userId, currentSeriesId))
-                    watchlistDAO.removeSeries(userId, currentSeriesId);
-                else
-                    watchlistDAO.addSeries(userId, currentSeriesId);
-
-            } else if (currentEpisodeId != null) {
-                if (watchlistDAO.isEpisodeInList(userId, currentEpisodeId))
-                    watchlistDAO.removeEpisode(userId, currentEpisodeId);
-                else
-                    watchlistDAO.addEpisode(userId, currentEpisodeId);
-            }
-            refreshWatchlistButton();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            showInfo("Erreur lors de la mise à jour de votre liste.");
-        }
-    }
-
-    // ── Commentaires ─────────────────────────────────────────────────────────
-    @FXML
-    private void postComment(ActionEvent event) {
-        if (SessionManager.getCurrentUser() == null) {
-            showInfo("Vous devez être connecté pour commenter.");
-            return;
-        }
-        String text = commentTextArea.getText().trim();
-        if (text.isEmpty()) return;
-
-        int userId = SessionManager.getCurrentUser().getId();
-        try {
-            if (currentFilmId    != null) commentDAO.addFilmComment(userId, currentFilmId, text);
-            else if (currentSeriesId  != null) commentDAO.addSeriesComment(userId, currentSeriesId, text);
-            else if (currentEpisodeId != null) commentDAO.addEpisodeComment(userId, currentEpisodeId, text);
-
-            commentTextArea.clear();
-            loadComments();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void loadComments() {
-        if (commentsContainer == null) return;
-        commentsContainer.getChildren().clear();
-        try {
-            List<com.jstream.model.Comment> comments = List.of();
-            if      (currentFilmId    != null) comments = commentDAO.findByFilm(currentFilmId);
-            else if (currentSeriesId  != null) comments = commentDAO.findBySeries(currentSeriesId);
-            else if (currentEpisodeId != null) comments = commentDAO.findByEpisode(currentEpisodeId);
-
-            for (com.jstream.model.Comment c : comments) {
-                VBox card = new VBox(4);
-                card.setStyle("-fx-background-color: #222; -fx-padding: 10; -fx-background-radius: 5;");
-                card.setPadding(new Insets(10));
-
-                String dateStr = c.getCreatedAt() != null ? c.getCreatedAt().format(FMT) : "";
-                Label header = new Label("Utilisateur #" + c.getUserId() + "  ·  " + dateStr);
-                header.setStyle("-fx-text-fill: #e50914; -fx-font-size: 12px; -fx-font-weight: bold;");
-
-                Label body = new Label(c.getContent());
-                body.setStyle("-fx-text-fill: white; -fx-font-size: 13px;");
-                body.setWrapText(true);
-
-                card.getChildren().addAll(header, body);
-                commentsContainer.getChildren().add(card);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // ── Navigation ───────────────────────────────────────────────────────────
     @FXML
     private void goBack(ActionEvent event) {
         try {
@@ -216,7 +119,9 @@ public class DetailsController implements Initializable {
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -224,21 +129,66 @@ public class DetailsController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Player.fxml"));
             Parent root = loader.load();
+
+            // ✅ NOUVEAU : On récupère le contrôleur du Player pour lui injecter la bonne vidéo
+            PlayerController playerController = loader.getController();
+            if (currentVideoPath != null && !currentVideoPath.isEmpty()) {
+                playerController.initVideo(currentVideoPath);
+            } else {
+                System.out.println("⚠️ Aucune vidéo associée à ce film !");
+            }
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void toggleMyList(ActionEvent event) {
+        if (currentMovieImagePath == null) return;
+
+        if (!DashboardController.mesFavoris.contains(currentMovieImagePath)) {
+            DashboardController.mesFavoris.add(currentMovieImagePath);
+            myListButton.setText("✔ Dans Ma Liste");
+            myListButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;");
+            System.out.println("Ajouté à Ma Liste : " + currentMovieImagePath);
+        } else {
+            DashboardController.mesFavoris.remove(currentMovieImagePath);
+            myListButton.setText("+ Ma Liste");
+            myListButton.setStyle("-fx-background-color: rgba(109, 109, 110, 0.7); -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;");
+            System.out.println("Retiré de Ma Liste : " + currentMovieImagePath);
+        }
     }
 
     @FXML
     private void submitRating(ActionEvent event) {
         String rating = ratingComboBox.getValue();
-        if (rating != null) System.out.println("Note : " + rating);
+        if (rating != null) {
+            System.out.println("Vous avez noté : " + rating);
+        }
     }
 
-    private void showInfo(String msg) {
-        new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK).showAndWait();
+    @FXML
+    private void postComment(ActionEvent event) {
+        String texte = commentTextArea.getText();
+        if (!texte.trim().isEmpty()) {
+            System.out.println("Nouveau commentaire : " + texte);
+            commentTextArea.clear();
+        }
+    }
+    public static void showFilm(int id, String title) {
+        currentFilmId = id;
+        currentSeriesId = null; // On remet la série à null car c'est un film
+        currentTitle = title;
+    }
+    public static void showSeries(int id, String title) {
+        currentSeriesId = id;
+        currentFilmId = null; // On remet le film à null car c'est une série
+        currentTitle = title;
     }
 
-    public void initData(String imagePath, String videoPath, boolean isSerie) {
+    public void initVideo(ActionEvent event) {
     }
 }

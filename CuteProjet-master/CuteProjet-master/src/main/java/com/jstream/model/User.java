@@ -8,12 +8,10 @@ public class User {
     private String email;
     private String passwordHash;
     private String role;
-
-    // ── Abonnement ──────────────────────────────────────────
     private LocalDateTime createdAt;
     private LocalDateTime subStart;
     private LocalDateTime subEnd;
-    private String subStatus; // ACTIVE | EXPIRED | INACTIVE
+    private String subStatus;
 
     public User() {}
 
@@ -38,7 +36,6 @@ public class User {
         this.subStatus    = subStatus;
     }
 
-    // ── Getters / Setters ────────────────────────────────────
     public int getId()                        { return id; }
     public void setId(int id)                 { this.id = id; }
 
@@ -66,4 +63,3 @@ public class User {
     public String getSubStatus()              { return subStatus; }
     public void setSubStatus(String s)        { this.subStatus = s; }
 }
- 
